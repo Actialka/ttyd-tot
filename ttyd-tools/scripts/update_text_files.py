@@ -9556,99 +9556,100 @@ g_PetalburgWestStrings = {
     # General White, after countdown timer unlock + at least one timed run.
 
     b"tot_di013040_00":
-        b"Hut! <wait 250>Good day to you, Mr.\n"
-        b"Red 'Stache! <wait 200>So, the device\n"
-        b"has finally been tested...\n"
+        b"Hut! <wait 250>Mr. Red 'Stache! <wait 200>I hear\n"
+        b"you have put my device to\n"
+        b"the test, <wait 100>BOOM!\n"
         b"<k>\n"
         b"<p>\n"
-        b"I've been keeping a careful\n"
-        b"record of your timed runs,\n"
-        b"<wait 100>BOOM! <wait 200>Let me see here...\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, 'Stache.\n"
+        b"<wait 200>Let me consult my notes...\n"
         b"<k>\n<o>",
 
     b"tot_di013041_00":
-        b"Hut-hut! <wait 250>Mr. Mustache! <wait 200>The\n"
-        b"device works splendidly, and\n"
-        b"the dragon is quaking, BOOM!\n"
+        b"Hut-hut! <wait 250>Mr. Mustache! <wait 200>That\n"
+        b"terrible dragon has been\n"
+        b"feeling the heat, <wait 100>BOOM!\n"
         b"<k>\n"
         b"<p>\n"
-        b"I've been keeping a careful\n"
-        b"record of your timed runs.\n"
-        b"<wait 200>Let me see here...\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, 'Stache.\n"
+        b"<wait 200>Let me consult my notes...\n"
         b"<k>\n<o>",
 
     b"tot_white_stats":
         # Should never appear; replaced with dynamic stats breakdown.
-        b"<p>\nHmm, I seem to have lost\nmy notes, hut...\n<k>\n<o>",
+        b"<p>\nHut? <wait 200>Where have my notes\ngone... <wait 150>BOOM...\n<k>\n<o>",
 
     b"tot_white_stats_base":
         b"<p>\n"
-        b"You've had me light the fuse\n"
-        b"%d time%s. <wait 250>You won %d time%s,\n"
-        b"and ran out of time %d time%s.\n"
+        b"You have had me start the\n"
+        b"timer %d time%s, hut! <wait 250>Victory\n"
+        b"%d time%s, <wait 150>BOOM %d time%s!\n"
         b"<k>\n",
 
     b"tot_white_stats_battle":
         b"<p>\n"
         b"The other %d time%s, <wait 150>the\n"
-        b"tower's denizens got to you\n"
-        b"before my timer did, hut!\n"
+        b"tower's foes got you before\n"
+        b"my device could, <wait 100>hut!\n"
         b"<k>\n",
 
     b"tot_white_stats_best":
         b"<p>\n"
-        b"Your shortest fuse cleared\n"
-        b"so far was just %d:%02d\n"
-        b"per set of floors, <wait 100>BOOM!\n"
+        b"And your shortest fuse yet?\n"
+        b"<wait 200>A mere %d:%02d per set of\n"
+        b"floors, <wait 100>BOOM!\n"
         b"<k>\n",
 
     b"tot_di013050_00":
         b"<p>\n"
-        b"That beast still stands, <wait 150>but I\n"
-        b"have every faith in you, Mr.\n"
-        b"'Stache! <wait 200>Try again, hut-hut!\n"
+        b"The beast still stands, but\n"
+        b"do not lose heart, 'Stache!\n"
+        b"<wait 200>Regroup and try again, hut!\n"
         b"<k>\n"
         b"<p>\n"
-        b"And there's no shame in a\n"
-        b"longer fuse while you get\n"
-        b"the hang of it, BOOM!\n"
+        b"A longer fuse is no shame,\n"
+        b"<wait 150>Mr. Red 'Stache. <wait 200>Even I\n"
+        b"started small, <wait 100>BOOM!\n"
         b"<k>",
 
     b"tot_di013051_00":
         b"<p>\n"
-        b"Hmm... <wait 200>the beast does seem to\n"
-        b"get the better of you more\n"
-        b"often than not, hut...\n"
+        b"Hmm... <wait 250>the device seems to be\n"
+        b"getting the better of you,\n"
+        b"<wait 150>Mr. Mustache, <wait 100>hut...\n"
         b"<k>\n"
         b"<p>\n"
-        b"Perhaps try a longer fuse,\n"
-        b"<wait 150>Mr. 'Stache? <wait 200>Haste makes\n"
-        b"waste, as they say, BOOM!\n"
+        b"Perhaps a longer fuse next\n"
+        b"time? <wait 200>Even a general must\n"
+        b"know when to retreat, BOOM!\n"
         b"<k>",
 
     b"tot_di013052_00":
         b"<p>\n"
         b"A fine record, <wait 150>Mr. Mustache!\n"
-        b"<wait 200>Keep the pressure on that\n"
-        b"dreadful beast, <wait 100>hut-hut!\n"
+        b"<wait 200>Keep up the pressure on that\n"
+        b"terrible dragon, <wait 100>hut-hut!\n"
         b"<k>",
 
     b"tot_di013053_00":
         b"<p>\n"
-        b"Why, you hardly need my\n"
-        b"device at all! <wait 200>Perhaps you\n"
-        b"could try a shorter fuse, hut?\n"
+        b"Hut! <wait 200>You hardly need my device\n"
+        b"at all, 'Stache! <wait 200>Perhaps I\n"
+        b"should shorten the fuse, BOOM!\n"
         b"<k>",
 
     b"tot_di013054_00":
         b"<p>\n"
-        b"You've even beaten the very\n"
-        b"shortest fuse I could rig!\n"
-        b"<wait 200>Truly heroic speed, BOOM!\n"
+        b"Hut-hut! <wait 200>You have even beaten\n"
+        b"the shortest fuse I could\n"
+        b"rig, Mr. Red 'Stache!\n"
         b"<k>\n"
         b"<p>\n"
-        b"I am forever in your debt,\n"
-        b"Mr. Red 'Stache, <wait 150>hut-hut!\n"
+        b"Truly, you have fulfilled\n"
+        b"my life's dreams once more!\n"
+        b"<wait 250>BOOM!\n"
         b"<k>",
 
 }
