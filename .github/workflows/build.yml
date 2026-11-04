@@ -39,6 +39,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libboost-program-options-dev
+          # Upstream elf2rel only understands DOL symbols ("addr:name") in the
+          # symbol map, and misreads the mod's symbols in other RELs
+          # ("module,section,offset:name", e.g. the hei_00 data used by the
+          # new file opening cutscene) as absolute addresses (0x40), so
+          # creating a new file crashed. Teach it that format.
+          git -C _ttyd-tools apply "$GITHUB_WORKSPACE/.github/elf2rel-rel-symbols.patch"
           E=_ttyd-tools/ttyd-tools/elf2rel
           # elf2rel.h uses uint8_t without including <cstdint>.
           g++ -O2 -std=c++17 -include cstdint -I"$E" "$E/elf2rel.cpp" \
@@ -59,7 +65,13 @@ jobs:
         working-directory: ttyd-tools/rel
         run: |
           sudo chown -R "$(id -u):$(id -g)" .
-          "$RUNNER_TEMP/elf2rel" rel.us.elf -s include/ttyd.us.lst --rel-id 8
+          "$RUNNER_TEMP/elf2rel" rel.us.elf -s include/ttyd.us.lst --rel-id 8 \
+            | tee "$RUNNER_TEMP/elf2rel.log"
+          # elf2rel only warns about unresolved symbols; don't ship such a REL.
+          if grep -q "Unresolved external symbol" "$RUNNER_TEMP/elf2rel.log"; then
+            echo "::error::elf2rel could not resolve some symbols"
+            exit 1
+          fi
           mkdir -p "$RUNNER_TEMP/out"
           cp rel.us.rel "$RUNNER_TEMP/out/gon.rel"
           ls -l "$RUNNER_TEMP/out/gon.rel"
