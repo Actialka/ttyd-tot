@@ -85,6 +85,8 @@ namespace ConversationId {
         NPC_D_SECRET_BADGE_COMBO,
         NPC_D_SECRET_COINS,
         NPC_D_SECRET_ZERO_STATS,
+        // Alternate badge combo hint, if Doopliss hasn't been beaten yet.
+        NPC_D_SECRET_BADGE_COMBO_VAGUE = 9520,
         // Follow-up prompt leading into the topic menu.
         NPC_D_TOPICS        = 9600,
 

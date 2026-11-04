@@ -9577,6 +9577,33 @@ g_PetalburgWestStrings = {
         b"that out! <wait 250>Heh heh...\n"
         b"<k>",
 
+    b"tot_di009520_00":
+        b"<p>\n"
+        b"So, <wait 150>you're trying to let\n"
+        b"someone attack with Jumpman\n"
+        b"& Hammerman on, <wait 150>eh?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Hmm... <wait 250>that's a strange one.\n"
+        b"<wait 250>Those badges only matter if\n"
+        b"they're on <dynamic 3>your</dynamic> moves, right?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Unless... <wait 250>someone out there\n"
+        b"could copy your moves <wait 150>and\n"
+        b"your badges, too?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I've heard whispers of a\n"
+        b"cackling trickster who loves\n"
+        b"to play dress-up...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"If he ever pretended to be\n"
+        b"you with both of those on...\n"
+        b"<wait 250>What would he even do?\n"
+        b"<k>",
+
     b"tot_di009512_00":
         b"<p>\n"
         b"So, <wait 150>you're trying to\n"

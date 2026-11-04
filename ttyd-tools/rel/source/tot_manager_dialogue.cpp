@@ -331,6 +331,14 @@ void DialogueManager::SetConversation(int32_t id) {
             }
             break;
         }
+        case ConversationId::NPC_D_SECRET_BADGE_COMBO: {
+            // Only refer to Doopliss by name once he's been beaten.
+            if (!GetSWF(GSWF_SecretBoss3_Beaten)) {
+                g_ConversationId =
+                    ConversationId::NPC_D_SECRET_BADGE_COMBO_VAGUE;
+            }
+            break;
+        }
         case ConversationId::NPC_F: {
             int32_t num_cvs =
                 ConversationId::NPC_F_CVS_END -
