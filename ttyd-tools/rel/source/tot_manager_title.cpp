@@ -20,6 +20,15 @@ namespace {
 constexpr const char* kVersion = "v4.01";
 constexpr const char* kTitleInfo = "v4.01 r62" "\n" "2026-03-11";
 
+// Hint for special save file names, shown on the title screen. Both new files
+// and existing files renamed at the file select screen (Y) get these modes.
+constexpr const char* kSpecialFileNamesInfo =
+    "Special file names:\n"
+    "RaceMode: Race mode\n"
+    "YCNOTGBY: 100% mode\n"
+    "xyzzy: Debug mode (in-game,\n"
+    "  L,Y,L,Y,L,Y,L,Y opens menu)";
+
 // How many times faster than vanilla the title screen's curtain and logo
 // animations play (must be an integer >= 1).
 constexpr int32_t kTitleAnimSpeed = 2;
@@ -157,6 +166,20 @@ void TitleScreenManager::Draw() {
             DrawCenteredTextWindow(
                 kTitleInfo, 230, -180, 0xFFu, true, 0xFFFFFFFFu, 0.52f, 
                 0x000000E5u, 8, 8);
+
+            // Draw special file name hints, left-aligned in the bottom-left.
+            const float scale = 0.5f;
+            const float pad = 8.0f;
+            const float left = -290.0f;
+            const float bottom = -215.0f;
+            float width, height;
+            GetTextDimensions(kSpecialFileNamesInfo, scale, &width, &height);
+            DrawWindow(
+                0x000000E5u, left - pad, bottom + height + pad,
+                width + 2 * pad, height + 2 * pad, 8);
+            DrawText(
+                kSpecialFileNamesInfo, left, bottom + height / 2, 0xFFu, true,
+                0xFFFFFFFFu, scale, /* middle-left */ 3);
         }
     }
 }
