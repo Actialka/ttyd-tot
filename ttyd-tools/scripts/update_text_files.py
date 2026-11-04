@@ -9553,6 +9553,121 @@ g_PetalburgWestStrings = {
         b"to give it your best shot!\n"
         b"<k>",
 
+    # General White, after countdown timer unlock + at least one timed run.
+
+    b"tot_di013040_00":
+        b"Hut! <wait 250>Mr. Red 'Stache! <wait 200>I hear\n"
+        b"you have put my device to\n"
+        b"the test, <wait 100>BOOM!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, 'Stache.\n"
+        b"<wait 200>Let me consult my notes...\n"
+        b"<k>\n<o>",
+
+    b"tot_di013041_00":
+        b"Hut-hut! <wait 250>Mr. Mustache! <wait 200>That\n"
+        b"terrible dragon has been\n"
+        b"feeling the heat, <wait 100>BOOM!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, 'Stache.\n"
+        b"<wait 200>Let me consult my notes...\n"
+        b"<k>\n<o>",
+
+    b"tot_di013042_00":
+        b"Hut! <wait 250>Good day to you, Mr.\n"
+        b"Red 'Stache! <wait 200>I have a\n"
+        b"confession to make...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, <wait 150>but I have\n"
+        b"kept none of yours, BOOM...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I have a fresh logbook ready,\n"
+        b"<wait 150>hut! <wait 200>Your next timed run\n"
+        b"shall be its first entry!\n"
+        b"<k>",
+
+    b"tot_white_stats":
+        # Should never appear; replaced with dynamic stats breakdown.
+        b"<p>\nHut? <wait 200>Where have my notes\ngone... <wait 150>BOOM...\n<k>\n<o>",
+
+    b"tot_white_stats_base":
+        b"<p>\n"
+        b"You have had me start the\n"
+        b"timer %d time%s, hut! <wait 250>Victory\n"
+        b"%d time%s, <wait 150>BOOM %d time%s!\n"
+        b"<k>\n",
+
+    b"tot_white_stats_battle":
+        b"<p>\n"
+        b"The other %d time%s, <wait 150>the\n"
+        b"tower's foes got you before\n"
+        b"my device could, <wait 100>hut!\n"
+        b"<k>\n",
+
+    b"tot_white_stats_best":
+        b"<p>\n"
+        b"And your shortest fuse yet?\n"
+        b"<wait 200>A mere %d:%02d per set of\n"
+        b"floors, <wait 100>BOOM!\n"
+        b"<k>\n",
+
+    b"tot_di013050_00":
+        b"<p>\n"
+        b"The beast still stands, but\n"
+        b"do not lose heart, 'Stache!\n"
+        b"<wait 200>Regroup and try again, hut!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"A longer fuse is no shame,\n"
+        b"<wait 150>Mr. Red 'Stache. <wait 200>Even I\n"
+        b"started small, <wait 100>BOOM!\n"
+        b"<k>",
+
+    b"tot_di013051_00":
+        b"<p>\n"
+        b"Hmm... <wait 250>the device seems to be\n"
+        b"getting the better of you,\n"
+        b"<wait 150>Mr. Mustache, <wait 100>hut...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Perhaps a longer fuse next\n"
+        b"time? <wait 200>Even a general must\n"
+        b"know when to retreat, BOOM!\n"
+        b"<k>",
+
+    b"tot_di013052_00":
+        b"<p>\n"
+        b"A fine record, <wait 150>Mr. Mustache!\n"
+        b"<wait 200>Keep up the pressure on that\n"
+        b"terrible dragon, <wait 100>hut-hut!\n"
+        b"<k>",
+
+    b"tot_di013053_00":
+        b"<p>\n"
+        b"Hut! <wait 200>You hardly need my device\n"
+        b"at all, 'Stache! <wait 200>Perhaps I\n"
+        b"should shorten the fuse, BOOM!\n"
+        b"<k>",
+
+    b"tot_di013054_00":
+        b"<p>\n"
+        b"Hut-hut! <wait 200>You have even beaten\n"
+        b"the shortest fuse I could\n"
+        b"rig, Mr. Red 'Stache!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Truly, you have fulfilled\n"
+        b"my life's dreams once more!\n"
+        b"<wait 250>BOOM!\n"
+        b"<k>",
+
 }
 
 g_PetalburgEastStrings = {

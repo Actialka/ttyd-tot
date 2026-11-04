@@ -686,7 +686,15 @@ enum Options : uint32_t {
     STAT_PERM_OPTION_PRESET_1   = 0x1c4'0'01'c0,
     STAT_PERM_OPTION_PRESET_2   = 0x1f4'0'01'c0,
     STAT_PERM_OPTION_PRESET_3   = 0x224'0'01'c0,
-    // Next: 0x254
+    // Countdown timer run stats (used for General White's dialogue).
+    STAT_PERM_COUNTDOWN_ATTEMPTS = 0x254'5'00'00,
+    STAT_PERM_COUNTDOWN_CLEARS   = 0x255'5'00'00,
+    STAT_PERM_COUNTDOWN_TIMEUPS  = 0x256'5'00'00,
+    // Highest countdown timer level cleared, and the shortest time per set
+    // of floors cleared (in seconds; 0 if no clears).
+    STAT_PERM_COUNTDOWN_MAX_LV   = 0x257'2'00'00,
+    STAT_PERM_COUNTDOWN_BEST_SET = 0x258'4'00'00,
+    // Next: 0x259
 };
 
 }  // namespace mod::tot

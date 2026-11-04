@@ -571,8 +571,55 @@ void DialogueManager::SetConversation(int32_t id) {
             break;
         }
         case ConversationId::NPC_WHITE: {
+            if (g_ConversationContinueId[0]) {
+                // Queue next conversation.
+                g_ConversationId = g_ConversationContinueId[0];
+                g_ConversationContinueId[0] = 0;
+                break;
+            }
+
             if (GetSWF(GSWF_White_CountdownUnlocked)) {
-                // Use default conversation.
+                int32_t attempts =
+                    state.GetOption(STAT_PERM_COUNTDOWN_ATTEMPTS);
+                int32_t clears = state.GetOption(STAT_PERM_COUNTDOWN_CLEARS);
+
+                if (attempts <= 0) {
+                    // If the save predates countdown run tracking, explain
+                    // that records are only starting now; otherwise, use
+                    // default conversation (the device is still untested).
+                    if (GetSWF(GSWF_White_CountdownPreStatsSave)) {
+                        g_ConversationId =
+                            ConversationId::NPC_WHITE_NEW_RECORDS;
+                    }
+                    break;
+                }
+
+                // Otherwise, give an intro, then (in the event script) a
+                // breakdown of countdown run stats, then a queued ending.
+                if (clears <= 0) {
+                    g_ConversationId = ConversationId::NPC_WHITE_POST_NO_CLEAR;
+                    g_ConversationContinueId[0] =
+                        ConversationId::NPC_WHITE_END_NO_CLEAR;
+                    break;
+                }
+
+                g_ConversationId = ConversationId::NPC_WHITE_POST_CLEAR;
+                // Highest countdown timer level (5 minutes per set).
+                if (state.GetOption(STAT_PERM_COUNTDOWN_MAX_LV) >= 11) {
+                    g_ConversationContinueId[0] =
+                        ConversationId::NPC_WHITE_END_MAX;
+                } else if (clears * 4 < attempts) {
+                    // Cleared < 25% of the time.
+                    g_ConversationContinueId[0] =
+                        ConversationId::NPC_WHITE_END_LOW;
+                } else if (clears * 5 >= attempts * 3) {
+                    // Cleared >= 60% of the time.
+                    g_ConversationContinueId[0] =
+                        ConversationId::NPC_WHITE_END_HIGH;
+                } else {
+                    g_ConversationContinueId[0] =
+                        ConversationId::NPC_WHITE_END_MED;
+                }
                 break;
             }
 

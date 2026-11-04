@@ -38,6 +38,7 @@ namespace MsgKey {
         TOT_LOBBY_BACKSIGN,
         TOT_MOVELOG_DESC_DYN,
         TOT_UPG_SMOOCH,
+        TOT_WHITE_STATS,
     };
 }
     
@@ -58,6 +59,7 @@ constexpr const char* kKeyLookups[] = {
     "tot_lobby_backsign",
     "tot_movelog_desc_dyn",
     "tot_upg_smooch",
+    "tot_white_stats",
 };
 
 // Shared across multiple functions.
@@ -182,6 +184,37 @@ const char* GetStatBreakdown() {
     return g_Buf;
 }
 
+// Prints General White's breakdown of countdown timer run stats.
+const char* GetCountdownStats() {
+    const auto& state = g_Mod->state_;
+    int32_t attempts = state.GetOption(STAT_PERM_COUNTDOWN_ATTEMPTS);
+    int32_t clears = state.GetOption(STAT_PERM_COUNTDOWN_CLEARS);
+    int32_t timeups = state.GetOption(STAT_PERM_COUNTDOWN_TIMEUPS);
+    int32_t best_secs = state.GetOption(STAT_PERM_COUNTDOWN_BEST_SET);
+    // Remaining attempts were lost in battle (or otherwise abandoned).
+    int32_t other = attempts - clears - timeups;
+    if (other < 0) other = 0;
+
+    char* ptr = g_Buf;
+    ptr += sprintf(
+        ptr, ttyd::msgdrv::msgSearch("tot_white_stats_base"),
+        attempts, attempts == 1 ? "" : "s",
+        clears, clears == 1 ? "" : "s",
+        timeups, timeups == 1 ? "" : "s");
+    if (other > 0) {
+        ptr += sprintf(
+            ptr, ttyd::msgdrv::msgSearch("tot_white_stats_battle"),
+            other, other == 1 ? "" : "s");
+    }
+    if (clears > 0 && best_secs > 0) {
+        ptr += sprintf(
+            ptr, ttyd::msgdrv::msgSearch("tot_white_stats_best"),
+            best_secs / 60, best_secs % 60);
+    }
+    sprintf(ptr, "<o>");
+    return g_Buf;
+}
+
 }
     
 const char* StringsManager::LookupReplacement(const char* msg_key) {
@@ -275,6 +308,9 @@ const char* StringsManager::LookupReplacement(const char* msg_key) {
             return GetRunInfoSignString(
                 /* floor = */ true,
                 /* options = */ GetSWByte(GSW_Tower_TutorialClears) >= 2);
+        }
+        case MsgKey::TOT_WHITE_STATS: {
+            return GetCountdownStats();
         }
         case MsgKey::TOT_GSTAT_RESULT: {
             return GetStatBreakdown();

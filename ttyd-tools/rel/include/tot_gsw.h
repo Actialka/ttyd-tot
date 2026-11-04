@@ -90,6 +90,9 @@ enum GlobalWorkVars {
     // Flag for enabling NPC to save custom presets.
     GSWF_NpcPreset_Enabled,
     GSWF_NpcPreset_FirstTimeChat,
+    // Flag for save files that had the countdown timer unlocked before
+    // countdown timer run stats were tracked.
+    GSWF_White_CountdownPreStatsSave,
 
     // Used for tracking things that persist across runs.
     GSWF_PeekabooEnabled                    = GSWF(7000),
