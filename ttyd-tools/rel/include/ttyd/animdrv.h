@@ -122,7 +122,7 @@ double animPoseGetLoopTimes(int32_t pose_idx);
 void animPoseSetAnim(int32_t pose_idx, const char* pose_name, int32_t unk0);
 // animPoseSetStartTime
 void animPoseSetLocalTime(double frame_count, int32_t pose_idx);
-// animPoseSetLocalTimeRate
+void animPoseSetLocalTimeRate(int32_t pose_idx, float rate);
 // animPosePaperPeraOff
 // animPosePaperPeraOn
 // animPosePeraOff

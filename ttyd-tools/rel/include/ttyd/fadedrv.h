@@ -34,6 +34,8 @@ uint32_t fadeIsFinish();
 // fadeInit
 // _callback
 
+extern void* fadedrvWorkPointer;
+
 }
 
 }

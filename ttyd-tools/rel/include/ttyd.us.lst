@@ -96,6 +96,8 @@
 
 // fadedrv.o
 80010d94:fadeIsFinish
+// .sbss
+8041E620:fadedrvWorkPointer
 
 // dispdrv.o
 // unused:dispGetEntNum
