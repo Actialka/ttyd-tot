@@ -160,6 +160,11 @@ constexpr int32_t kLeaveCheckFrames = 15;
 int32_t g_LeaveCheckTimer = 0;
 bool g_FadeFinishedAtPress = false;
 bool g_Leaving = false;
+// Whether the file select screen has finished fading in (while its files
+// were being drawn). Any fade starting after that is the screen being left,
+// e.g. the curtain closing when booting into a file, which can start well
+// after the button press that selected the file.
+bool g_FadeInFinished = false;
 // The file being renamed, and the name being entered.
 int32_t g_File = -1;
 char g_Name[kMaxNameLength + 1];
@@ -518,6 +523,7 @@ void FileRenameManager::Update() {
         g_HoveredFile = -1;
         g_LeaveCheckTimer = 0;
         g_Leaving = false;
+        g_FadeInFinished = false;
         g_DialogHideTimer = 0;
         return;
     }
@@ -543,6 +549,13 @@ void FileRenameManager::Update() {
             g_LeaveCheckTimer = 0;
         }
     }
+
+    if (ttyd::fadedrv::fadeIsFinish()) {
+        if (g_FilesDrawnLastFrame) g_FadeInFinished = true;
+    } else if (g_FadeInFinished) {
+        g_Leaving = true;
+    }
+    if (ttyd::seqdrv::seqGetNextSeq() != SeqIndex::kLoad) g_Leaving = true;
 
     g_HoveredFile =
         (g_WaitForRelease || g_Leaving || g_LeaveCheckTimer > 0 ||
