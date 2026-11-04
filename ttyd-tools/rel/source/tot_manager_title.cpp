@@ -139,7 +139,7 @@ uintptr_t g_FadeEntryAddress = 0;
 bool g_FadeEntryHooked = false;
 
 constexpr const int32_t kMaxDiagEvents = 22;
-char g_DiagEvents[kMaxDiagEvents][48];
+char g_DiagEvents[kMaxDiagEvents][96];
 int32_t g_NumDiagEvents = 0;
 uint32_t g_DiagFrame = 0;
 uint64_t g_DiagStartTime = 0;
@@ -149,7 +149,7 @@ int32_t g_DiagLastSeq = -1;
 int32_t g_DiagLastNextSeq = -1;
 int32_t g_DiagLastTitleState = -1;
 int32_t g_DiagLastFadeTypes[5] = { -1, -1, -1, -1, -1 };
-char g_DiagStatus[160];
+char g_DiagStatus[256];
 
 uint32_t TicksToCentis(uint64_t ticks) {
     return DurationTicksToCentiseconds(static_cast<int64_t>(ticks));
@@ -163,8 +163,8 @@ void AddDiagEvent(const char* text) {
     else ++g_NumDiagEvents;
     const uint32_t centis =
         TicksToCentis(gc::OSTime::OSGetTime() - g_DiagStartTime);
-    snprintf(
-        g_DiagEvents[index], sizeof(g_DiagEvents[index]),
+    sprintf(
+        g_DiagEvents[index],
         "%4" PRIu32 " %3" PRIu32 ".%02" PRIu32 "s %s",
         g_DiagFrame, centis / 100, centis % 100, text);
 }
@@ -187,12 +187,12 @@ void UpdateDiagnostics() {
         g_DiagFps = g_DiagFps * 0.9f + fps * 0.1f;
     }
 
-    char buf[48];
+    char buf[64];
     const int32_t seq = static_cast<int32_t>(ttyd::seqdrv::seqGetSeq());
     const int32_t next_seq =
         static_cast<int32_t>(ttyd::seqdrv::seqGetNextSeq());
     if (seq != g_DiagLastSeq || next_seq != g_DiagLastNextSeq) {
-        snprintf(buf, sizeof(buf), "seq %" PRId32 " (next %" PRId32 ")",
+        sprintf(buf, "seq %" PRId32 " (next %" PRId32 ")",
                  seq, next_seq);
         AddDiagEvent(buf);
         g_DiagLastSeq = seq;
@@ -206,7 +206,7 @@ void UpdateDiagnostics() {
         title_state = title->state;
     }
     if (title_state != g_DiagLastTitleState) {
-        snprintf(buf, sizeof(buf), "title state %" PRId32, title_state);
+        sprintf(buf, "title state %" PRId32, title_state);
         AddDiagEvent(buf);
         g_DiagLastTitleState = title_state;
     }
@@ -220,11 +220,11 @@ void UpdateDiagnostics() {
                 (entry.flags & kFadeEntryActive) ? entry.type : -1;
             if (type != g_DiagLastFadeTypes[i]) {
                 if (type >= 0) {
-                    snprintf(buf, sizeof(buf),
+                    sprintf(buf,
                         "fade%" PRId32 " start type %" PRId32 " fl %" PRIx32,
                         i, type, static_cast<uint32_t>(entry.flags));
                 } else {
-                    snprintf(buf, sizeof(buf), "fade%" PRId32 " end", i);
+                    sprintf(buf, "fade%" PRId32 " end", i);
                 }
                 AddDiagEvent(buf);
                 g_DiagLastFadeTypes[i] = type;
@@ -234,7 +234,7 @@ void UpdateDiagnostics() {
 
     while (g_NumFadeCallsLogged < g_NumFadeCalls) {
         const auto& call = g_FadeCalls[g_NumFadeCallsLogged % kMaxFadeCalls];
-        snprintf(buf, sizeof(buf),
+        sprintf(buf,
             "fadeEntry t%" PRId32 " d%" PRId32 "->%" PRId32 " %08" PRIx32,
             call.type, call.duration, call.new_duration,
             static_cast<uint32_t>(call.caller));
@@ -246,7 +246,7 @@ void UpdateDiagnostics() {
     // float formatting this early in boot.
     const int32_t fps_tenths = static_cast<int32_t>(g_DiagFps * 10.0f);
     if (title && title_state >= 0) {
-        snprintf(g_DiagStatus, sizeof(g_DiagStatus),
+        sprintf(g_DiagStatus,
             "fps %" PRId32 ".%" PRId32 "  seq %" PRId32 "/%" PRId32 "\n"
             "title st %" PRId32 " cnt %" PRId32 " tmr %" PRId32
             " a %" PRId32,
@@ -254,7 +254,7 @@ void UpdateDiagnostics() {
             title->counter, title->timer,
             static_cast<int32_t>(title->fade_alpha * 100.0f));
     } else {
-        snprintf(g_DiagStatus, sizeof(g_DiagStatus),
+        sprintf(g_DiagStatus,
             "fps %" PRId32 ".%" PRId32 "  seq %" PRId32 "/%" PRId32,
             fps_tenths / 10, fps_tenths % 10, seq, next_seq);
     }
