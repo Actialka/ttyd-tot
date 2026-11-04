@@ -93,6 +93,17 @@ public:
     bool HasBackupSave() const;
     TotSaveSlot* GetBackupSave() const;
 
+    // Returns the special file mode option value (e.g. race / debug mode)
+    // tied to the given save file name, or 0 if the name isn't special.
+    static uint32_t GetSpecialFileNameMode(const char* file_name);
+    // Enables the special file mode tied to the current save file's name, if
+    // any and not already enabled. Used both for new files and for existing
+    // files that were renamed. Returns whether a new mode was enabled.
+    bool ApplySpecialFileNameMode();
+    // Recomputes / validates the checksum of raw save slot data.
+    static void ComputeSaveChecksum(TotSaveSlot* save);
+    static bool IsSaveSlotValid(const TotSaveSlot* save);
+
     // Initialize run-specific stats, options, play stats, etc. to defaults.
     void ResetOptions();
 
