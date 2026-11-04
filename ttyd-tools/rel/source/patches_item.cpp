@@ -89,6 +89,7 @@ extern const int32_t g_ItemEvent_LastDinner_Weapon;
 extern const int32_t g_ItemEvent_Teki_Kyouka_ApplyStatusHook;
 extern const int32_t g_ItemEvent_Support_NoEffect_TradeOffJumpPoint;
 extern const int32_t g_ItemEvent_Poison_Kinoko_PoisonChance;
+extern const int32_t g_ItemEvent_Nemure_Yoikoyo_SleepWait;
 extern const int32_t g_fbatBattleMode_Patch_BumpAttackLevel;
 extern const int32_t g_btlseqTurn_HappyHeartProc_BH;
 extern const int32_t g_btlseqTurn_HappyHeartProc_EH;
@@ -957,6 +958,10 @@ void ApplyFixedPatches() {
             last.x_speed = 5.0f;
             return eff;
         });
+    // Apply the sleep sooner to match the faster herd; originally the item's
+    // event waited 300 frames after starting the effect.
+    mod::writePatch(
+        reinterpret_cast<void*>(g_ItemEvent_Nemure_Yoikoyo_SleepWait), 180);
 
     // Hot Sauce charges by +3.
     ttyd::battle_item_data::ItemWeaponData_RedKararing.charge_strength = 3;
