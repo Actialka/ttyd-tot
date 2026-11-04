@@ -9557,33 +9557,6 @@ g_PetalburgWestStrings = {
 
     b"tot_di009511_00":
         b"<p>\n"
-        b"So, <wait 150>you're trying to get\n"
-        b"Doopliss to attack with\n"
-        b"Jumpman & Hammerman on, <wait 150>eh?\n"
-        b"<k>\n"
-        b"<p>\n"
-        b"Hmm... <wait 250>that's a strange one.\n"
-        b"<wait 250>Those badges only matter if\n"
-        b"they're on <dynamic 3>your</dynamic> moves, right?\n"
-        b"<k>\n"
-        b"<p>\n"
-        b"But when Doopliss pretends\n"
-        b"to be you, <wait 150>he copies your\n"
-        b"moves <wait 150>and your badges, too!\n"
-        b"<k>\n"
-        b"<p>\n"
-        b"So if he's copying you with\n"
-        b"both of those badges on...\n"
-        b"<wait 250>What would he even do?\n"
-        b"<k>\n"
-        b"<p>\n"
-        b"I'd sure love to see the look\n"
-        b"on his face when he figures\n"
-        b"that out! <wait 250>Heh heh...\n"
-        b"<k>",
-
-    b"tot_di009520_00":
-        b"<p>\n"
         b"So, <wait 150>you're trying to let\n"
         b"someone attack with Jumpman\n"
         b"& Hammerman on, <wait 150>eh?\n"
@@ -9607,6 +9580,11 @@ g_PetalburgWestStrings = {
         b"If he ever pretended to be\n"
         b"you with both of those on...\n"
         b"<wait 250>What would he even do?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I'd sure love to see the look\n"
+        b"on his face when he figures\n"
+        b"that out! <wait 250>Heh heh...\n"
         b"<k>",
 
     b"tot_di009512_00":
