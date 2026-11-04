@@ -229,10 +229,20 @@ void DialogueManager::SetConversation(int32_t id) {
             break;
         }
         case ConversationId::NPC_D: {
+            if (g_ConversationContinueId[0]) {
+                // Follow-up prompt leading into the topic menu.
+                g_ConversationId = g_ConversationContinueId[0];
+                g_ConversationContinueId[0] = 0;
+                break;
+            }
             if (completed_runs < 1 || !GetSWF(GSWF_NpcD_FirstTimeChat)) {
                 SetSWF(GSWF_NpcD_FirstTimeChat);
                 break;
             }
+
+            // After the regular hint, offer a menu of hints for unique
+            // bosses and secret achievements for the player to pick from.
+            g_ConversationContinueId[0] = ConversationId::NPC_D_TOPICS;
 
             int8_t const* grid;
             int8_t const* states;
@@ -310,87 +320,6 @@ void DialogueManager::SetConversation(int32_t id) {
                     }
                 }
             }
-
-            // Special hints for unique bosses and secret achievements;
-            // these are given in a fixed order rather than randomly.
-            const int16_t kSpecialHints[] = {
-                ConversationId::NPC_D_BOSS_1,
-                ConversationId::NPC_D_BOSS_2,
-                ConversationId::NPC_D_BOSS_3,
-                ConversationId::NPC_D_SECRET_DAMAGE,
-                ConversationId::NPC_D_SECRET_BADGE_COMBO,
-                ConversationId::NPC_D_SECRET_COINS,
-                ConversationId::NPC_D_SECRET_ZERO_STATS,
-            };
-            constexpr int32_t kNumSpecialHints =
-                sizeof(kSpecialHints) / sizeof(kSpecialHints[0]);
-
-            // Unique bosses can't appear in special filename modes.
-            const bool special_mode =
-                state.CheckOptionValue(OPTVAL_RACE_MODE_ENABLED) ||
-                state.CheckOptionValue(OPTVAL_100_MODE_ENABLED);
-
-            bool special_active[kNumSpecialHints];
-            int32_t num_special = 0;
-            for (int32_t i = 0; i < kNumSpecialHints; ++i) {
-                bool active = false;
-                switch (kSpecialHints[i]) {
-                    case ConversationId::NPC_D_BOSS_1:
-                        active = !special_mode &&
-                            !GetSWF(GSWF_SecretBoss1_Beaten);
-                        break;
-                    case ConversationId::NPC_D_BOSS_2:
-                        active = !special_mode &&
-                            !GetSWF(GSWF_SecretBoss2_Beaten);
-                        break;
-                    case ConversationId::NPC_D_BOSS_3:
-                        active = !special_mode &&
-                            !GetSWF(GSWF_SecretBoss3_Beaten);
-                        break;
-                    case ConversationId::NPC_D_SECRET_DAMAGE:
-                        active = !state.GetOption(
-                            FLAGS_ACHIEVEMENT, AchievementId::SECRET_DAMAGE);
-                        break;
-                    case ConversationId::NPC_D_SECRET_BADGE_COMBO:
-                        // Only hint once Doopliss isn't a spoiler.
-                        active = GetSWF(GSWF_SecretBoss3_Beaten) &&
-                            !state.GetOption(FLAGS_ACHIEVEMENT,
-                                AchievementId::SECRET_BADGE_COMBO);
-                        break;
-                    case ConversationId::NPC_D_SECRET_COINS:
-                        active = !state.GetOption(
-                            FLAGS_ACHIEVEMENT, AchievementId::SECRET_COINS);
-                        break;
-                    case ConversationId::NPC_D_SECRET_ZERO_STATS:
-                        active = !state.GetOption(FLAGS_ACHIEVEMENT,
-                            AchievementId::SECRET_ZERO_STATS_3);
-                        break;
-                }
-                special_active[i] = active;
-                if (active) ++num_special;
-            }
-
-            // Alternate between regular and special hints when both are
-            // available, otherwise use whichever kind is available.
-            bool use_special = num_special > 0 && (
-                num_cvs < 1 ||
-                num_achievements == num_total_achievements ||
-                !GetSWF(GSWF_NpcD_LastHintSpecial));
-
-            if (use_special) {
-                // Pick the next active special hint in order, wrapping.
-                int32_t index =
-                    GetSWByte(GSW_NpcD_NextSpecialHint) % kNumSpecialHints;
-                while (!special_active[index]) {
-                    index = (index + 1) % kNumSpecialHints;
-                }
-                g_ConversationId = kSpecialHints[index];
-                SetSWByte(
-                    GSW_NpcD_NextSpecialHint, (index + 1) % kNumSpecialHints);
-                SetSWF(GSWF_NpcD_LastHintSpecial);
-                break;
-            }
-            SetSWF(GSWF_NpcD_LastHintSpecial, 0);
 
             if (num_achievements == num_total_achievements) {
                 g_ConversationId = ConversationId::NPC_D_ALL_DONE;

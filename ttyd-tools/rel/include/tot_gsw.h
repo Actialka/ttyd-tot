@@ -30,7 +30,6 @@ enum GlobalWorkVars {
     GSW_Boss_Target1_Part,
     GSW_Boss_Target2_Unit,
     GSW_Boss_Target2_Part,
-    GSW_NpcD_NextSpecialHint,
 
     // Used for cosmetic choices that persist across runs.
     GSW_MarioCostume                        = GSW(1500),
@@ -94,8 +93,6 @@ enum GlobalWorkVars {
     // Flag for save files that had the countdown timer unlocked before
     // countdown timer run stats were tracked.
     GSWF_White_CountdownPreStatsSave,
-    // Flag for whether NPC D's last hint was a special (non-random) one.
-    GSWF_NpcD_LastHintSpecial,
 
     // Used for tracking things that persist across runs.
     GSWF_PeekabooEnabled                    = GSWF(7000),

@@ -396,8 +396,57 @@ EVT_BEGIN(Npc_C_Talk)
 EVT_END()
 
 EVT_BEGIN(Npc_D_Talk)
-    SET(LW(15), (int32_t)ConversationId::NPC_D)
-    RUN_CHILD_EVT(Npc_ConversationDrive_Talk)
+    // Print regular hint (or first-time dialogue).
+    USER_FUNC(evtTot_SetConversation, (int32_t)ConversationId::NPC_D)
+    USER_FUNC(evtTot_GetNextMessage, LW(0), LW(1))
+    USER_FUNC(evt_msg_print, 0, LW(0), 0, PTR("me"))
+
+    // If a follow-up is queued, offer a menu of other topics to ask about.
+    USER_FUNC(evtTot_HasConversationQueued, LW(0))
+    IF_EQUAL(LW(0), 0)
+        RETURN()
+    END_IF()
+    USER_FUNC(evtTot_SetConversation, (int32_t)ConversationId::NPC_D)
+    USER_FUNC(evtTot_GetNextMessage, LW(0), LW(1))
+    USER_FUNC(evt_msg_print_add, 0, LW(0))
+
+    USER_FUNC(evt_msg_select, 0, PTR("tot_npcd_topics"))
+    SWITCH(LW(0))
+        CASE_EQUAL(0) GOTO(10)
+        CASE_EQUAL(1) GOTO(20)
+        CASE_ETC()    GOTO(99)
+    END_SWITCH()
+
+LBL(10)
+    // Unique bosses.
+    USER_FUNC(evt_msg_select, 0, PTR("tot_npcd_bosses"))
+    SWITCH(LW(0))
+        CASE_BETWEEN(0, 2)
+            ADD(LW(0), (int32_t)ConversationId::NPC_D_BOSS_1)
+            GOTO(70)
+        CASE_ETC()
+            GOTO(99)
+    END_SWITCH()
+
+LBL(20)
+    // Secret achievements.
+    USER_FUNC(evt_msg_select, 0, PTR("tot_npcd_secrets"))
+    SWITCH(LW(0))
+        CASE_BETWEEN(0, 3)
+            ADD(LW(0), (int32_t)ConversationId::NPC_D_SECRET_DAMAGE)
+            GOTO(70)
+        CASE_ETC()
+            GOTO(99)
+    END_SWITCH()
+
+LBL(70)
+    USER_FUNC(evtTot_SetConversation, LW(0))
+    USER_FUNC(evtTot_GetNextMessage, LW(0), LW(1))
+    USER_FUNC(evt_msg_print_add, 0, LW(0))
+    RETURN()
+
+LBL(99)
+    USER_FUNC(evt_msg_print_add, 0, PTR("tot_npcd_decline"))
     RETURN()
 EVT_END()
 

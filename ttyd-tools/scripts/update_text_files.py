@@ -8744,7 +8744,7 @@ g_PetalburgWestStrings = {
         b"Up to you if you'd rather just\n"
         b"deal with whoever decides to\n"
         b"show up, though.\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009122_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -8770,7 +8770,7 @@ g_PetalburgWestStrings = {
         b"Even just a First Strike from\n"
         b"Spin Jump or Ultra Hammer\n"
         b"still makes a big difference!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009125_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -8801,7 +8801,7 @@ g_PetalburgWestStrings = {
         b"Should be a piece of cake!\n"
         b"<wait 200>Just resist the urge to take\n"
         b"too many new moves.\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009126_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -8862,7 +8862,7 @@ g_PetalburgWestStrings = {
         b"In that case, you'll just have\n"
         b"to give up and start another\n"
         b"run. <wait 250>That's the way it goes!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009127_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -8912,7 +8912,7 @@ g_PetalburgWestStrings = {
         b"<p>\n"
         b"That's about all I've got...\n"
         b"<wait 250>Let me know how it goes!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009128_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -8973,7 +8973,7 @@ g_PetalburgWestStrings = {
         b"<dynamic 3>Whew!</dynamic> <wait 250>That's a lot of stuff\n"
         b"to keep in mind.<wait 300> Good luck,\n"
         b"<wait 250>hopefully it goes well!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009129_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9009,7 +9009,7 @@ g_PetalburgWestStrings = {
         b"I wonder how high an intensity\n"
         b"level you could beat a run with?\n"
         b"<wait 350>250%? <wait 350>300%? <wait 350>Hmm...\n"
-        b"<k>",
+        b"<k>\n<o>",
  
     b"tot_di009130_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9035,7 +9035,7 @@ g_PetalburgWestStrings = {
         b"I guess with two of the three\n"
         b"to cover you, doing without one\n"
         b"shouldn't be too bad, right?\n"
-        b"<k>",
+        b"<k>\n<o>",
     
     b"tot_di009131_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9070,7 +9070,7 @@ g_PetalburgWestStrings = {
         b"Plus, you can always rely\n"
         b"on your partners' HP to\n"
         b"protect you from the front!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009140_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9096,7 +9096,7 @@ g_PetalburgWestStrings = {
         b"It's not guaranteed to work,\n"
         b"but it could save you a lot of\n"
         b"trouble if it does!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009141_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9117,7 +9117,7 @@ g_PetalburgWestStrings = {
         b"Maybe one of them always\n"
         b"uses a bite attack under\n"
         b"predictable conditions!\n"
-        b"<k>",
+        b"<k>\n<o>",
     
     b"tot_di009149_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9138,7 +9138,7 @@ g_PetalburgWestStrings = {
         b"You'll want to take extra\n"
         b"stat increase rewards, if that's\n"
         b"the case. <wait 250>Yup!\n"
-        b"<k>",
+        b"<k>\n<o>",
     
     b"tot_di009150_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9174,7 +9174,7 @@ g_PetalburgWestStrings = {
         b"That's about all I've got. <wait 300>Say,\n"
         b"<wait 200>this could also help if you want\n"
         b"to buy a lot of items at once...\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009156_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9215,7 +9215,7 @@ g_PetalburgWestStrings = {
         b"Come to think of it, Zess T.'s\n"
         b"specialty items are probably\n"
         b"worth collecting as well...\n"
-        b"<k>",
+        b"<k>\n<o>",
         
     b"tot_di009177_00":
         b"Oh, it's you again. <wait 250>You want\n"
@@ -9251,7 +9251,7 @@ g_PetalburgWestStrings = {
         b"If all else fails, and if you've\n"
         b"got a lot of max Star Power,\n"
         b"Mystic Eggs will do the trick!\n"
-        b"<k>",
+        b"<k>\n<o>",
         
     b"tot_di009182_00":
         b"Oh, it's you again. <wait 250>You want\n"
@@ -9282,7 +9282,7 @@ g_PetalburgWestStrings = {
         b"There might be options that\n"
         b"could help as well; <wait 250>you should\n"
         b"chat up Merlon if you see him!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009300_00":
         b"Oh, it's you again. <wait 250>Welcome!\n"
@@ -9291,7 +9291,7 @@ g_PetalburgWestStrings = {
         b"It seems you probably don't\n"
         b"need my help at the moment.\n"
         b"<wait 250>That's good, I guess...\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009301_00":
         b"Oh, it's you again. <wait 250>Welcome!\n"
@@ -9310,7 +9310,7 @@ g_PetalburgWestStrings = {
         b"Right now, just staying in\n"
         b"here seems pretty cozy, though.\n"
         b"Perhaps another time...\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009400_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9336,7 +9336,7 @@ g_PetalburgWestStrings = {
         b"I know he's knowledgeable\n"
         b"about seeds, <wait 200>but maybe he'll\n"
         b"have a lead on this too?\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009401_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9362,7 +9362,7 @@ g_PetalburgWestStrings = {
         b"She's a big fan of your moves,\n"
         b"<wait 200>so maybe she could give you\n"
         b"a special way to use them?\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009402_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9387,7 +9387,7 @@ g_PetalburgWestStrings = {
         b"<p>\n"
         b"Perhaps you could talk to\n"
         b"him and see what he's up to!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009403_00":
         b"Oh, it's you again. <wait 250>You say\n"
@@ -9418,17 +9418,17 @@ g_PetalburgWestStrings = {
         b"Ehh... <wait 150>probably a bit of a\n"
         b"stretch, <wait 150>but who knows?\n"
         b"<wait 250>You might get lucky!\n"
-        b"<k>",
+        b"<k>\n<o>",
 
     b"tot_di009500_00":
-        b"Oh, it's you again. <wait 250>Say,\n"
-        b"<wait 150>have you heard the rumors\n"
-        b"about the top of the tower?\n"
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say there's\n"
+        b"sometimes no dragon up there...\n"
         b"<k>\n"
         b"<p>\n"
-        b"Folks say that sometimes,\n"
-        b"<wait 150>something other than a dragon\n"
-        b"is waiting up there...\n"
+        b"Instead, <wait 150>something else is\n"
+        b"waiting at the top...\n"
         b"<k>\n"
         b"<p>\n"
         b"Something shiny and golden,\n"
@@ -9457,14 +9457,14 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009501_00":
-        b"Oh, it's you again. <wait 250>Say,\n"
-        b"<wait 150>have you heard the rumors\n"
-        b"about the top of the tower?\n"
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say a\n"
+        b"certain spiky-shelled king...\n"
         b"<k>\n"
         b"<p>\n"
-        b"Folks say a certain spiky-\n"
-        b"shelled king and his witchy\n"
-        b"assistant have been spotted...\n"
+        b"And his witchy assistant\n"
+        b"have been spotted up there!\n"
         b"<k>\n"
         b"<p>\n"
         b"Supposedly, they'll only show\n"
@@ -9493,14 +9493,14 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009502_00":
-        b"Oh, it's you again. <wait 250>Say,\n"
-        b"<wait 150>have you heard the rumors\n"
-        b"about the top of the tower?\n"
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say a\n"
+        b"sheet-wearing trickster...\n"
         b"<k>\n"
         b"<p>\n"
-        b"Folks say a certain sheet-\n"
-        b"wearing trickster's been\n"
-        b"lurking around up there...\n"
+        b"Has been lurking around\n"
+        b"up there lately!\n"
         b"<k>\n"
         b"<p>\n"
         b"Supposedly, he'll only show\n"
@@ -9529,9 +9529,10 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009510_00":
-        b"Oh, it's you again. <wait 250>You say\n"
-        b"you want to take exactly 654\n"
-        b"damage in a single tower run?\n"
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"take exactly 654 damage in\n"
+        b"a single tower run, <wait 150>eh?\n"
         b"<k>\n"
         b"<p>\n"
         b"What a weirdly specific goal!\n"
@@ -9555,9 +9556,10 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009511_00":
-        b"Oh, it's you again. <wait 250>You say\n"
-        b"you want Doopliss to attack\n"
-        b"with Jumpman and Hammerman on?\n"
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"let Doopliss attack with\n"
+        b"Jumpman & Hammerman on, <wait 150>eh?\n"
         b"<k>\n"
         b"<p>\n"
         b"Hmm... <wait 250>when he's pretending\n"
@@ -9576,9 +9578,10 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009512_00":
-        b"Oh, it's you again. <wait 250>You say\n"
-        b"you want to spend exactly 417\n"
-        b"coins in a single tower run?\n"
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"spend exactly 417 coins in\n"
+        b"a single tower run, <wait 150>eh?\n"
         b"<k>\n"
         b"<p>\n"
         b"What a weirdly specific goal!\n"
@@ -9602,9 +9605,10 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009513_00":
-        b"Oh, it's you again. <wait 250>You say\n"
-        b"you want to finish a run with\n"
-        b"all your stats at level 0?\n"
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"finish a run with all your\n"
+        b"stats at level 0, <wait 150>eh?\n"
         b"<k>\n"
         b"<p>\n"
         b"Wow, <wait 200>you sure like a challenge.\n"
@@ -9631,6 +9635,28 @@ g_PetalburgWestStrings = {
         b"most of the heavy lifting, <wait 200>so\n"
         b"pick some sturdy ones!\n"
         b"<k>",
+
+    b"tot_di009600_00":
+        # Follow-up prompt leading into topic menu.
+        b"<p>\n"
+        b"Oh, <wait 150>is there anything else\n"
+        b"you wanted to pick my\n"
+        b"brain about?\n<o>",
+
+    b"tot_npcd_topics":
+        b"<select 0 2 0 40>\n"
+        b"Tower rumors\nSecret goals\nNever mind",
+
+    b"tot_npcd_bosses":
+        b"<select 0 3 0 40>\n"
+        b"A golden swarm\nA king and a witch\nA sheet trickster\nNever mind",
+
+    b"tot_npcd_secrets":
+        b"<select 0 4 0 60>\n"
+        b"654 damage\nJumpman & Hammerman\n417 coins\nAll stats at 0\nNever mind",
+
+    b"tot_npcd_decline":
+        b"<p>\nAlright, <wait 150>come back anytime!\n<k>",
         
     # General White.
     
