@@ -138,7 +138,7 @@ uint32_t g_NumFadeCallsLogged = 0;
 uintptr_t g_FadeEntryAddress = 0;
 bool g_FadeEntryHooked = false;
 
-constexpr const int32_t kMaxDiagEvents = 22;
+constexpr const int32_t kMaxDiagEvents = 30;
 char g_DiagEvents[kMaxDiagEvents][96];
 int32_t g_NumDiagEvents = 0;
 uint32_t g_DiagFrame = 0;
@@ -148,6 +148,8 @@ float g_DiagFps = 0.0f;
 int32_t g_DiagLastSeq = -1;
 int32_t g_DiagLastNextSeq = -1;
 int32_t g_DiagLastTitleState = -1;
+uint32_t g_DiagTitleStartFrame = 0;
+uint64_t g_DiagTitleStartTime = 0;
 int32_t g_DiagLastFadeTypes[5] = { -1, -1, -1, -1, -1 };
 char g_DiagStatus[256];
 
@@ -205,6 +207,10 @@ void UpdateDiagnostics() {
     if (seq == static_cast<int32_t>(ttyd::seqdrv::SeqIndex::kTitle) && title) {
         title_state = title->state;
     }
+    if (title_state >= 0 && g_DiagLastTitleState < 0) {
+        g_DiagTitleStartFrame = g_DiagFrame;
+        g_DiagTitleStartTime = now;
+    }
     if (title_state != g_DiagLastTitleState) {
         sprintf(buf, "title state %" PRId32, title_state);
         AddDiagEvent(buf);
@@ -232,7 +238,8 @@ void UpdateDiagnostics() {
         }
     }
 
-    while (g_NumFadeCallsLogged < g_NumFadeCalls) {
+    // (fadeEntry calls are no longer logged individually, to save space.)
+    while (false && g_NumFadeCallsLogged < g_NumFadeCalls) {
         const auto& call = g_FadeCalls[g_NumFadeCallsLogged % kMaxFadeCalls];
         sprintf(buf,
             "fadeEntry t%" PRId32 " d%" PRId32 "->%" PRId32 " %08" PRIx32,
@@ -245,12 +252,24 @@ void UpdateDiagnostics() {
     // Formatted as integers (fps in tenths, alpha in hundredths), to avoid
     // float formatting this early in boot.
     const int32_t fps_tenths = static_cast<int32_t>(g_DiagFps * 10.0f);
+    // Average frame rate since the title screen started.
+    int32_t avg_fps_tenths = 0;
+    if (title_state >= 0) {
+        const uint32_t centis = TicksToCentis(now - g_DiagTitleStartTime);
+        if (centis > 0) {
+            avg_fps_tenths = static_cast<int32_t>(
+                (g_DiagFrame - g_DiagTitleStartFrame) * 1000 / centis);
+        }
+    }
     if (title && title_state >= 0) {
         sprintf(g_DiagStatus,
-            "fps %" PRId32 ".%" PRId32 "  seq %" PRId32 "/%" PRId32 "\n"
+            "fps %" PRId32 ".%" PRId32 " (title avg %" PRId32 ".%" PRId32
+            ")  seq %" PRId32 "/%" PRId32 "\n"
             "title st %" PRId32 " cnt %" PRId32 " tmr %" PRId32
             " a %" PRId32,
-            fps_tenths / 10, fps_tenths % 10, seq, next_seq, title_state,
+            fps_tenths / 10, fps_tenths % 10,
+            avg_fps_tenths / 10, avg_fps_tenths % 10, seq, next_seq,
+            title_state,
             title->counter, title->timer,
             static_cast<int32_t>(title->fade_alpha * 100.0f));
     } else {
@@ -273,10 +292,10 @@ void DrawDiagnostics() {
     DrawWindow(
         0x000000C0u, left - 6.0f, y + 6.0f, 270.0f,
         num_lines * line_height + 12.0f, 6);
-    DrawText(g_DiagStatus, left, y, 0xFF, true, 0xFFFF80FFu, scale, 0);
+    DrawText(g_DiagStatus, left, y, 0xFF, false, 0xFFFF80FFu, scale, 0);
     y -= line_height * 2.5f;
     for (int32_t i = 0; i < g_NumDiagEvents; ++i) {
-        DrawText(g_DiagEvents[i], left, y, 0xFF, true, 0xFFFFFFFFu, scale, 0);
+        DrawText(g_DiagEvents[i], left, y, 0xFF, false, 0xFFFFFFFFu, scale, 0);
         y -= line_height;
     }
 }
@@ -433,6 +452,8 @@ void TitleScreenManager::Draw() {
                 0x000000E5u, 8, 8);
 
             // Draw special file name / debug mode hints in the top-right.
+            // (No text outline: outlined text redraws every character several
+            // times, which made the title screen lag with this much text.)
             const float scale = 0.42f;
             const float pad = 8.0f;
             const float right = 296.0f;
@@ -444,7 +465,7 @@ void TitleScreenManager::Draw() {
                 0x000000E5u, left - pad, top + pad,
                 width + 2 * pad, height + 2 * pad, 8);
             DrawText(
-                kSpecialFileNamesInfo, left, top, 0xFFu, true,
+                kSpecialFileNamesInfo, left, top, 0xFFu, false,
                 0xFFFFFFFFu, scale, /* top-left */ 0);
         }
     }
