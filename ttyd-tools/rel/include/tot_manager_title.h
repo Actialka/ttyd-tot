@@ -6,8 +6,6 @@ namespace mod::tot {
 
 class TitleScreenManager {
 public:
-    // Installs hooks; should be called once at mod initialization.
-    static void Init();
     // Code that runs every frame.
     static void Update();
     // Code that runs drawing-related code every frame.

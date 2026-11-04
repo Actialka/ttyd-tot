@@ -64,7 +64,6 @@ void Mod::Init() {
     // Hook / patch other functions with custom logic.
     tot::patch::ApplyAllFixedPatches();
     tot::FileRenameManager::Init();
-    tot::TitleScreenManager::Init();
 }
 
 void Mod::Update() {
