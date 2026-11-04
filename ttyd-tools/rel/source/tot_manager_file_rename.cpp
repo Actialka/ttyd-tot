@@ -87,6 +87,14 @@ int32_t g_HoveredFile = -1;
 // last update, and during the previous frame.
 uint32_t g_FilesDrawn = 0;
 uint32_t g_FilesDrawnLastFrame = 0;
+// After pressing A / B on the file select screen, the hint is hidden for a
+// few frames to see if the screen starts transitioning away (e.g. the curtain
+// closing when returning to the title screen, or loading a file). If it does,
+// it stays hidden until the file select screen is left.
+constexpr int32_t kLeaveCheckFrames = 15;
+int32_t g_LeaveCheckTimer = 0;
+bool g_FadeFinishedAtPress = false;
+bool g_Leaving = false;
 // The file being renamed, and the name being entered.
 int32_t g_File = -1;
 char g_Name[kMaxNameLength + 1];
@@ -126,10 +134,6 @@ int32_t GetHoveredFile() {
     // Only offer renaming once the file select screen is actually showing the
     // file (e.g. not while the "reading save file" message is up).
     if (!(g_FilesDrawnLastFrame & (1U << file))) return -1;
-    // Also not while transitioning away (e.g. the curtain closing after
-    // pressing B to return to the title screen).
-    if (ttyd::seqdrv::seqGetNextSeq() != SeqIndex::kLoad) return -1;
-    if (!ttyd::fadedrv::fadeIsFinish()) return -1;
 
     const TotSaveSlot* slot = GetSaveSlot(file);
     if (!slot || !StateManager::IsSaveSlotValid(slot)) return -1;
@@ -408,6 +412,8 @@ void FileRenameManager::Update() {
         if (g_Active) Close();
         g_WaitForRelease = false;
         g_HoveredFile = -1;
+        g_LeaveCheckTimer = 0;
+        g_Leaving = false;
         return;
     }
 
@@ -416,7 +422,26 @@ void FileRenameManager::Update() {
         return;
     }
 
-    g_HoveredFile = g_WaitForRelease ? -1 : GetHoveredFile();
+    // Detect the file select screen transitioning away after A / B is
+    // pressed while the hint is showing. A fade only counts if it started
+    // after the press (not e.g. the screen still fading in).
+    if (g_HoveredFile >= 0 &&
+        (g_keyGetButtonTrg_trampoline(0) & (ButtonId::A | ButtonId::B))) {
+        g_LeaveCheckTimer = kLeaveCheckFrames;
+        g_FadeFinishedAtPress = ttyd::fadedrv::fadeIsFinish();
+    }
+    if (g_LeaveCheckTimer > 0) {
+        --g_LeaveCheckTimer;
+        if ((g_FadeFinishedAtPress && !ttyd::fadedrv::fadeIsFinish()) ||
+            ttyd::seqdrv::seqGetNextSeq() != SeqIndex::kLoad) {
+            g_Leaving = true;
+            g_LeaveCheckTimer = 0;
+        }
+    }
+
+    g_HoveredFile =
+        (g_WaitForRelease || g_Leaving || g_LeaveCheckTimer > 0)
+            ? -1 : GetHoveredFile();
     if (g_HoveredFile >= 0 && !ttyd::cardmgr::cardIsExec() &&
         (g_keyGetButtonTrg_trampoline(0) & ButtonId::Y)) {
         Open(g_HoveredFile);
