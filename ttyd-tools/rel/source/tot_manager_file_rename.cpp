@@ -7,6 +7,7 @@
 
 #include <ttyd/cardmgr.h>
 #include <ttyd/dispdrv.h>
+#include <ttyd/fadedrv.h>
 #include <ttyd/pmario_sound.h>
 #include <ttyd/seqdrv.h>
 #include <ttyd/system.h>
@@ -125,6 +126,10 @@ int32_t GetHoveredFile() {
     // Only offer renaming once the file select screen is actually showing the
     // file (e.g. not while the "reading save file" message is up).
     if (!(g_FilesDrawnLastFrame & (1U << file))) return -1;
+    // Also not while transitioning away (e.g. the curtain closing after
+    // pressing B to return to the title screen).
+    if (ttyd::seqdrv::seqGetNextSeq() != SeqIndex::kLoad) return -1;
+    if (!ttyd::fadedrv::fadeIsFinish()) return -1;
 
     const TotSaveSlot* slot = GetSaveSlot(file);
     if (!slot || !StateManager::IsSaveSlotValid(slot)) return -1;
