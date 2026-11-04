@@ -4,6 +4,7 @@
 #include "common_ui.h"
 #include "patch.h"
 
+#include <gc/OSTime.h>
 #include <ttyd/animdrv.h>
 #include <ttyd/fadedrv.h>
 #include <ttyd/mariost.h>
@@ -118,6 +119,169 @@ void (*g_fadeEntry_trampoline)(
     int32_t, int32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,
     uint32_t) = nullptr;
 
+// --- Temporary diagnostics for title screen timing. -------------------------
+// Shows a timeline of screen / title state changes and fades (with frame
+// numbers and real time) on the logo and title screens, plus the live frame
+// rate. Set to false to hide.
+constexpr const bool kShowTitleDiagnostics = true;
+
+struct FadeCall {
+    int32_t type;
+    int32_t duration;
+    int32_t new_duration;
+    uintptr_t caller;
+};
+constexpr const int32_t kMaxFadeCalls = 8;
+FadeCall g_FadeCalls[kMaxFadeCalls];
+volatile uint32_t g_NumFadeCalls = 0;
+uint32_t g_NumFadeCallsLogged = 0;
+uintptr_t g_FadeEntryAddress = 0;
+bool g_FadeEntryHooked = false;
+
+constexpr const int32_t kMaxDiagEvents = 22;
+char g_DiagEvents[kMaxDiagEvents][48];
+int32_t g_NumDiagEvents = 0;
+uint32_t g_DiagFrame = 0;
+uint64_t g_DiagStartTime = 0;
+uint64_t g_DiagLastTime = 0;
+float g_DiagFps = 0.0f;
+int32_t g_DiagLastSeq = -1;
+int32_t g_DiagLastNextSeq = -1;
+int32_t g_DiagLastTitleState = -1;
+int32_t g_DiagLastFadeTypes[5] = { -1, -1, -1, -1, -1 };
+char g_DiagStatus[160];
+
+uint32_t TicksToCentis(uint64_t ticks) {
+    return DurationTicksToCentiseconds(static_cast<int64_t>(ticks));
+}
+
+void AddDiagEvent(const char* text) {
+    // Once the log is full, keep the oldest entries and replace the last one,
+    // so the start of the boot sequence stays visible.
+    int32_t index = g_NumDiagEvents;
+    if (index >= kMaxDiagEvents) index = kMaxDiagEvents - 1;
+    else ++g_NumDiagEvents;
+    const uint32_t centis =
+        TicksToCentis(gc::OSTime::OSGetTime() - g_DiagStartTime);
+    snprintf(
+        g_DiagEvents[index], sizeof(g_DiagEvents[index]),
+        "%4" PRIu32 " %3" PRIu32 ".%02" PRIu32 "s %s",
+        g_DiagFrame, centis / 100, centis % 100, text);
+}
+
+void UpdateDiagnostics() {
+    if (!kShowTitleDiagnostics) return;
+    const uint64_t now = gc::OSTime::OSGetTime();
+    if (g_DiagFrame == 0) {
+        g_DiagStartTime = now;
+        g_DiagLastTime = now;
+        AddDiagEvent(g_FadeEntryHooked ? "fade hook on" : "fade hook OFF");
+    }
+    ++g_DiagFrame;
+
+    // Smoothed frame rate.
+    const uint32_t frame_centis = TicksToCentis(now - g_DiagLastTime);
+    g_DiagLastTime = now;
+    if (frame_centis > 0) {
+        const float fps = 100.0f / frame_centis;
+        g_DiagFps = g_DiagFps * 0.9f + fps * 0.1f;
+    }
+
+    char buf[48];
+    const int32_t seq = static_cast<int32_t>(ttyd::seqdrv::seqGetSeq());
+    const int32_t next_seq =
+        static_cast<int32_t>(ttyd::seqdrv::seqGetNextSeq());
+    if (seq != g_DiagLastSeq || next_seq != g_DiagLastNextSeq) {
+        snprintf(buf, sizeof(buf), "seq %" PRId32 " (next %" PRId32 ")",
+                 seq, next_seq);
+        AddDiagEvent(buf);
+        g_DiagLastSeq = seq;
+        g_DiagLastNextSeq = next_seq;
+    }
+
+    auto* title = reinterpret_cast<TitleWork*>(
+        ttyd::seq_title::seqTitleWorkPointer2);
+    int32_t title_state = -1;
+    if (seq == static_cast<int32_t>(ttyd::seqdrv::SeqIndex::kTitle) && title) {
+        title_state = title->state;
+    }
+    if (title_state != g_DiagLastTitleState) {
+        snprintf(buf, sizeof(buf), "title state %" PRId32, title_state);
+        AddDiagEvent(buf);
+        g_DiagLastTitleState = title_state;
+    }
+
+    auto* fade_work = reinterpret_cast<FadeWork*>(
+        ttyd::fadedrv::fadedrvWorkPointer);
+    if (fade_work) {
+        for (int32_t i = 0; i < 5; ++i) {
+            const auto& entry = fade_work->entries[i];
+            const int32_t type =
+                (entry.flags & kFadeEntryActive) ? entry.type : -1;
+            if (type != g_DiagLastFadeTypes[i]) {
+                if (type >= 0) {
+                    snprintf(buf, sizeof(buf),
+                        "fade%" PRId32 " start type %" PRId32 " fl %" PRIx32,
+                        i, type, static_cast<uint32_t>(entry.flags));
+                } else {
+                    snprintf(buf, sizeof(buf), "fade%" PRId32 " end", i);
+                }
+                AddDiagEvent(buf);
+                g_DiagLastFadeTypes[i] = type;
+            }
+        }
+    }
+
+    while (g_NumFadeCallsLogged < g_NumFadeCalls) {
+        const auto& call = g_FadeCalls[g_NumFadeCallsLogged % kMaxFadeCalls];
+        snprintf(buf, sizeof(buf),
+            "fadeEntry t%" PRId32 " d%" PRId32 "->%" PRId32 " %08" PRIx32,
+            call.type, call.duration, call.new_duration,
+            static_cast<uint32_t>(call.caller));
+        AddDiagEvent(buf);
+        ++g_NumFadeCallsLogged;
+    }
+
+    if (title) {
+        snprintf(g_DiagStatus, sizeof(g_DiagStatus),
+            "fps %.1f  seq %" PRId32 "/%" PRId32 "\n"
+            "title st %" PRId32 " cnt %" PRId32 " tmr %" PRId32
+            " a %.2f",
+            g_DiagFps, seq, next_seq, title_state,
+            title_state >= 0 ? title->counter : -1,
+            title_state >= 0 ? title->timer : -1,
+            title_state >= 0 ? title->fade_alpha : -1.0f);
+    } else {
+        snprintf(g_DiagStatus, sizeof(g_DiagStatus),
+            "fps %.1f  seq %" PRId32 "/%" PRId32,
+            g_DiagFps, seq, next_seq);
+    }
+}
+
+void DrawDiagnostics() {
+    if (!kShowTitleDiagnostics) return;
+    const auto seq = ttyd::seqdrv::seqGetSeq();
+    if (seq != ttyd::seqdrv::SeqIndex::kLogo &&
+        seq != ttyd::seqdrv::SeqIndex::kTitle) {
+        return;
+    }
+    const float scale = 0.42f;
+    const float left = -296.0f;
+    float y = 220.0f;
+    const float line_height = 25.0f * scale;
+    const int32_t num_lines = g_NumDiagEvents + 3;
+    DrawWindow(
+        0x000000C0u, left - 6.0f, y + 6.0f, 270.0f,
+        num_lines * line_height + 12.0f, 6);
+    DrawText(g_DiagStatus, left, y, 0xFF, true, 0xFFFF80FFu, scale, 0);
+    y -= line_height * 2.5f;
+    for (int32_t i = 0; i < g_NumDiagEvents; ++i) {
+        DrawText(g_DiagEvents[i], left, y, 0xFF, true, 0xFFFFFFFFu, scale, 0);
+        y -= line_height;
+    }
+}
+// --- End of temporary diagnostics. -------------------------------------------
+
 bool IsTitleOrLogoCode(uintptr_t addr) {
     return (addr >= kSeqTitleTextStart && addr < kSeqTitleTextEnd) ||
         (addr >= kSeqLogoTextStart && addr < kSeqLogoTextEnd);
@@ -132,10 +296,19 @@ __attribute__((noinline)) void fadeEntry_hook(
     uint32_t a5, uint32_t a6, uint32_t a7) {
     const uintptr_t caller =
         reinterpret_cast<uintptr_t>(__builtin_return_address(0));
+    const int32_t original_duration = duration;
     if (IsTitleOrLogoCode(caller) && !IsCurtainFade(type) &&
         duration > kTitleAnimSpeed) {
         duration /= kTitleAnimSpeed;
     }
+    // Record the call for the diagnostics overlay (no function calls here).
+    auto& call = g_FadeCalls[g_NumFadeCalls % kMaxFadeCalls];
+    call.type = type;
+    call.duration = original_duration;
+    call.new_duration = duration;
+    call.caller = caller;
+    ++g_NumFadeCalls;
+
     g_fadeEntry_trampoline(type, duration, a2, a3, a4, a5, a6, a7);
 }
 
@@ -224,6 +397,7 @@ void SpeedUpTitleLogo() {
 
 void TitleScreenManager::Init() {
     const uintptr_t fade_entry = FindFadeEntry();
+    g_FadeEntryAddress = fade_entry;
     if (!fade_entry) return;
     // Don't hook if the first instruction is a relative branch, since it
     // couldn't be moved to the trampoline.
@@ -234,15 +408,19 @@ void TitleScreenManager::Init() {
     g_fadeEntry_trampoline = mod::hookFunction(
         reinterpret_cast<decltype(g_fadeEntry_trampoline)>(fade_entry),
         fadeEntry_hook);
+    g_FadeEntryHooked = true;
 }
 
 void TitleScreenManager::Update() {
+    UpdateDiagnostics();
     if (!CheckSeq(ttyd::seqdrv::SeqIndex::kTitle)) return;
     SpeedUpTitleCurtains();
     SpeedUpTitleLogo();
 }
 
 void TitleScreenManager::Draw() {
+    DrawDiagnostics();
+
     // If on the title screen and the curtain is not fully down.
     if (CheckSeq(ttyd::seqdrv::SeqIndex::kTitle)) {
         const uint32_t curtain_state = *reinterpret_cast<uint32_t*>(
