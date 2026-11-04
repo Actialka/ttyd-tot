@@ -26,10 +26,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out mod
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Check out ttyd-tools (for elf2rel)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ env.TTYD_TOOLS_REPO }}
           ref: ${{ env.TTYD_TOOLS_COMMIT }}
@@ -65,7 +65,7 @@ jobs:
           ls -l "$RUNNER_TEMP/out/gon.rel"
 
       - name: Upload gon.rel
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gon-rel
           path: ${{ runner.temp }}/out/gon.rel
