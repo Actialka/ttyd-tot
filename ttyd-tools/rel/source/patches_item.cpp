@@ -935,19 +935,26 @@ void ApplyFixedPatches() {
 
     // Reduce Sleepy Sheep turn count to 3, to reduce frustration AND cheese.
     ttyd::battle_item_data::ItemWeaponData_Nemure_Yoikoyo.sleep_time = 3;
-    // Speed up the straggler sheep at the end of the Sleepy Sheep herd.
-    // Originally it waits 200 frames past the rest of the herd and runs at a
-    // random 2.0 - 3.9 units/frame, so it can take ~750 frames to cross the
-    // stage (well past the end of the item's 450-frame event).
+    // Speed up the Sleepy Sheep herd animation. Originally each sheep runs at
+    // a random 2.0 - 3.9 units/frame across a 1000-unit stage, and the final
+    // straggler sheep waits 200 frames past the rest of the herd, so the
+    // effect could take ~750 frames (well past the item's 450-frame event).
+    // Now the herd runs twice as fast (done by ~330 frames at worst), and the
+    // straggler starts 40 frames after the herd at a fixed 5.0 units/frame
+    // (done by ~290 frames).
     g_effSheepEntry_trampoline = mod::hookFunction(
         ttyd::eff_sheep::effSheepEntry,
         [](int32_t type, float x, float y, float z) {
             auto* eff = g_effSheepEntry_trampoline(type, x, y, z);
             auto* sheep = reinterpret_cast<ttyd::eff_sheep::EffSheepWork*>(
                 eff->eff_work);
+            // Entry 0 is the spawn position, not a sheep.
+            for (int32_t i = 1; i < eff->eff_count - 1; ++i) {
+                sheep[i].x_speed *= 2.0f;
+            }
             auto& last = sheep[eff->eff_count - 1];
-            last.delay = eff->eff_count + 60;
-            last.x_speed = 4.0f;
+            last.delay = eff->eff_count + 40;
+            last.x_speed = 5.0f;
             return eff;
         });
 
