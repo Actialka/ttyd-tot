@@ -2,6 +2,7 @@
 
 #include "common_functions.h"
 #include "common_ui.h"
+#include "patch.h"
 
 #include <ttyd/animdrv.h>
 #include <ttyd/fadedrv.h>
@@ -19,6 +20,27 @@ namespace {
 
 constexpr const char* kVersion = "v4.01";
 constexpr const char* kTitleInfo = "v4.01 r62" "\n" "2026-03-11";
+
+// Hint for special save file names, debug mode cheat codes, and the debug
+// menu's controls, shown on the title screen. Both new files and existing
+// files renamed at the file select screen (Y) get these modes.
+constexpr const char* kSpecialFileNamesInfo =
+    "Special file names:\n"
+    "RaceMode: Race mode\n"
+    "YCNOTGBY: 100% mode\n"
+    "xyzzy: Debug mode\n"
+    "\n"
+    "Debug mode only, in-game codes:\n"
+    "L,Y,L,Y,L,Y,L,Y: Open debug menu\n"
+    "R,L,Y,X,B,A,L,A: Get Bump Attack\n"
+    "L,Z,L,Z,L,Z,L,Z: End countdown timer\n"
+    "\n"
+    "Debug menu controls:\n"
+    "D-Pad: Move, Y: Select\n"
+    "(L+Y on achievements: include secret)\n"
+    "Enemies: Up/Down: Slot, Left/Right: Enemy\n"
+    "  (hold L: +/-16), Y: Clear, L+Y: Done\n"
+    "Floor: D-Pad: Change (hold L: +/-8), Y: Set";
 
 // How many times faster than vanilla the title screen's curtain and logo
 // animations play (must be an integer >= 1).
@@ -76,6 +98,65 @@ bool IsCurtainFade(int32_t type) {
         type == kFadeCurtainSidesA1Top || type == kFadeCurtainSidesA2Top;
 }
 
+// Address ranges of the title / logo screens' code, used to identify fades
+// started by those screens (e.g. the white fade-in to the title screen).
+constexpr const uintptr_t kSeqTitleTextStart    = 0x80008888;
+constexpr const uintptr_t kSeqTitleTextEnd      = 0x80009e00;
+constexpr const uintptr_t kSeqLogoTextStart     = 0x800859f8;
+constexpr const uintptr_t kSeqLogoTextEnd       = 0x80087500;
+// evt_fade_entry (and the function after it), which calls fadeEntry.
+constexpr const uintptr_t kEvtFadeEntryStart    = 0x80135fdc;
+constexpr const uintptr_t kEvtFadeEntryEnd      = 0x80136080;
+// fadeEntry lies in the fade driver's code, after fadeIsFinish and before
+// the next object file's code (hitdrv).
+constexpr const uintptr_t kFadeEntrySearchStart = 0x80010d94;
+constexpr const uintptr_t kFadeEntrySearchEnd   = 0x80013cec;
+
+// Hook for fadeEntry(type, duration, color); extra argument registers are
+// passed through as-is in case the function takes more than three.
+void (*g_fadeEntry_trampoline)(
+    int32_t, int32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,
+    uint32_t) = nullptr;
+
+bool IsTitleOrLogoCode(uintptr_t addr) {
+    return (addr >= kSeqTitleTextStart && addr < kSeqTitleTextEnd) ||
+        (addr >= kSeqLogoTextStart && addr < kSeqLogoTextEnd);
+}
+
+// Speeds up (non-curtain) fades started by the title / logo screens, such as
+// the white fade-in to the title screen, by shortening their duration. The
+// hook is branched to from fadeEntry's first instruction, so the return
+// address is that of fadeEntry's caller.
+__attribute__((noinline)) void fadeEntry_hook(
+    int32_t type, int32_t duration, uint32_t a2, uint32_t a3, uint32_t a4,
+    uint32_t a5, uint32_t a6, uint32_t a7) {
+    const uintptr_t caller =
+        reinterpret_cast<uintptr_t>(__builtin_return_address(0));
+    if (IsTitleOrLogoCode(caller) && !IsCurtainFade(type) &&
+        duration > kTitleAnimSpeed) {
+        duration /= kTitleAnimSpeed;
+    }
+    g_fadeEntry_trampoline(type, duration, a2, a3, a4, a5, a6, a7);
+}
+
+// Finds fadeEntry's address from the call to it in evt_fade_entry, since it
+// isn't in the symbol map; returns 0 if it can't be found.
+uintptr_t FindFadeEntry() {
+    for (uintptr_t addr = kEvtFadeEntryStart; addr < kEvtFadeEntryEnd;
+         addr += 4) {
+        const uint32_t instr = *reinterpret_cast<const uint32_t*>(addr);
+        // Look for "bl <relative address>" instructions.
+        if ((instr & 0xfc000003U) != 0x48000001U) continue;
+        int32_t offset = static_cast<int32_t>(instr & 0x03fffffcU);
+        if (offset & 0x02000000) offset -= 0x04000000;
+        const uintptr_t target = addr + offset;
+        if (target > kFadeEntrySearchStart && target < kFadeEntrySearchEnd) {
+            return target;
+        }
+    }
+    return 0;
+}
+
 // Speeds up the curtain animations, which are run by the fade driver.
 void SpeedUpTitleCurtains() {
     auto* fade_work = reinterpret_cast<FadeWork*>(
@@ -131,13 +212,28 @@ void SpeedUpTitleLogo() {
                 }
                 break;
             case 3:
-                // Wait before "Press Start" fades in and input is accepted.
-                if (work->counter <= fps) ++work->counter;
+                // Wait before "Press Start" fades in and input is accepted;
+                // skip almost all of it.
+                if (work->counter < fps) work->counter = fps;
                 break;
         }
     }
 }
 
+}
+
+void TitleScreenManager::Init() {
+    const uintptr_t fade_entry = FindFadeEntry();
+    if (!fade_entry) return;
+    // Don't hook if the first instruction is a relative branch, since it
+    // couldn't be moved to the trampoline.
+    const uint32_t first_instr = *reinterpret_cast<const uint32_t*>(fade_entry);
+    const uint32_t opcode = first_instr >> 26;
+    if (opcode == 16 || opcode == 18) return;
+
+    g_fadeEntry_trampoline = mod::hookFunction(
+        reinterpret_cast<decltype(g_fadeEntry_trampoline)>(fade_entry),
+        fadeEntry_hook);
 }
 
 void TitleScreenManager::Update() {
@@ -157,6 +253,21 @@ void TitleScreenManager::Draw() {
             DrawCenteredTextWindow(
                 kTitleInfo, 230, -180, 0xFFu, true, 0xFFFFFFFFu, 0.52f, 
                 0x000000E5u, 8, 8);
+
+            // Draw special file name / debug mode hints in the top-right.
+            const float scale = 0.42f;
+            const float pad = 8.0f;
+            const float right = 296.0f;
+            const float top = 220.0f;
+            float width, height;
+            GetTextDimensions(kSpecialFileNamesInfo, scale, &width, &height);
+            const float left = right - width;
+            DrawWindow(
+                0x000000E5u, left - pad, top + pad,
+                width + 2 * pad, height + 2 * pad, 8);
+            DrawText(
+                kSpecialFileNamesInfo, left, top, 0xFFu, true,
+                0xFFFFFFFFu, scale, /* top-left */ 0);
         }
     }
 }

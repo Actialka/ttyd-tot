@@ -7,6 +7,7 @@
 #include "patches_item.h"
 #include "tot_generate_enemy.h"
 #include "tot_manager_cosmetics.h"
+#include "tot_manager_file_rename.h"
 #include "tot_manager_move.h"
 #include "tot_state.h"
 #include "tot_window_item.h"
@@ -741,6 +742,8 @@ void ApplyFixedPatches() {
 
 void DisplayFileSelectProgress(
     ttyd::seq_load::SeqLoadWinDataEntry* win, int32_t file, int32_t file_hovered) {
+    FileRenameManager::OnFileInfoDrawn(file);
+
     // Load data from currently_pointed save file.
     const auto* raw_save_data = (TotSaveSlot*)(
         (uintptr_t)ttyd::cardmgr::cardGetFilePtr() + file * 0x4000 + 0x2000);

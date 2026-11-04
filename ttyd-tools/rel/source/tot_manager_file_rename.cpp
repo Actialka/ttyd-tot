@@ -7,6 +7,7 @@
 
 #include <ttyd/cardmgr.h>
 #include <ttyd/dispdrv.h>
+#include <ttyd/fadedrv.h>
 #include <ttyd/pmario_sound.h>
 #include <ttyd/seqdrv.h>
 #include <ttyd/system.h>
@@ -15,9 +16,69 @@
 #include <cstdio>
 #include <cstring>
 
+extern "C" {
+    // file_rename_patches.s
+    void windowDispGX_Message_hook();
+    void windowDispGX_System_hook();
+    void windowDispGX_Kanban_hook();
+    void msgWindow_Disp_hook();
+
+    // Set by the hooks above whenever a dialog / message window is drawn.
+    int32_t g_FileRenameDialogDrawn = 0;
+    // Trampolines to the original functions, used by the hooks above.
+    void* windowDispGX_Message_hook_trampoline = nullptr;
+    void* windowDispGX_System_hook_trampoline = nullptr;
+    void* windowDispGX_Kanban_hook_trampoline = nullptr;
+    void* msgWindow_Disp_hook_trampoline = nullptr;
+}
+
 namespace mod::tot {
 
 namespace {
+
+// Addresses of the game's dialog / message window drawing functions.
+constexpr uintptr_t kWindowDispGX_Message = 0x8007bad8;
+constexpr uintptr_t kWindowDispGX_System  = 0x8007d994;
+constexpr uintptr_t kWindowDispGX_Kanban  = 0x8007e9f0;
+constexpr uintptr_t kMsgWindow_Disp       = 0x80080260;
+
+// The hooks below are only needed on the file select screen, so they're only
+// patched in while on it, leaving the rest of the game (e.g. the title
+// screen) running the original code. This records each hooked function's
+// original first instruction, and the branch to the hook that replaced it.
+struct HookPatch {
+    uint32_t* address;
+    uint32_t original;
+    uint32_t hooked;
+};
+constexpr int32_t kMaxHookPatches = 16;
+HookPatch g_HookPatches[kMaxHookPatches];
+int32_t g_NumHookPatches = 0;
+bool g_HooksInstalled = true;
+
+// Records a function hooked with mod::hookFunction, given its trampoline
+// (whose first instruction is the function's original first instruction).
+void RecordHook(void* function, void* trampoline) {
+    if (g_NumHookPatches >= kMaxHookPatches) return;
+    auto* address = reinterpret_cast<uint32_t*>(function);
+    g_HookPatches[g_NumHookPatches++] = {
+        address, *reinterpret_cast<uint32_t*>(trampoline), *address };
+}
+
+void SetHooksInstalled(bool installed) {
+    if (installed == g_HooksInstalled) return;
+    for (int32_t i = 0; i < g_NumHookPatches; ++i) {
+        const auto& patch = g_HookPatches[i];
+        mod::writePatch(
+            patch.address, installed ? patch.hooked : patch.original);
+    }
+    g_HooksInstalled = installed;
+}
+
+void* HookDialogDrawFunction(uintptr_t address, void (*hook)()) {
+    return reinterpret_cast<void*>(mod::hookFunction(
+        reinterpret_cast<void (*)()>(address), hook));
+}
 
 using ::ttyd::seqdrv::SeqIndex;
 
@@ -82,6 +143,23 @@ bool g_Active = false;
 bool g_WaitForRelease = false;
 // The existing save file currently hovered on the file select screen, or -1.
 int32_t g_HoveredFile = -1;
+// Bitmasks of files whose info was drawn on the file select screen since the
+// last update, and during the previous frame.
+uint32_t g_FilesDrawn = 0;
+uint32_t g_FilesDrawnLastFrame = 0;
+// Frames left to keep the hint hidden after a dialog box (e.g. the copy /
+// delete prompts, or "reading save file") was last drawn, since renaming
+// isn't possible while one is up.
+constexpr int32_t kDialogHideFrames = 10;
+int32_t g_DialogHideTimer = 0;
+// After pressing A / B on the file select screen, the hint is hidden for a
+// few frames to see if the screen starts transitioning away (e.g. the curtain
+// closing when returning to the title screen, or loading a file). If it does,
+// it stays hidden until the file select screen is left.
+constexpr int32_t kLeaveCheckFrames = 15;
+int32_t g_LeaveCheckTimer = 0;
+bool g_FadeFinishedAtPress = false;
+bool g_Leaving = false;
 // The file being renamed, and the name being entered.
 int32_t g_File = -1;
 char g_Name[kMaxNameLength + 1];
@@ -118,6 +196,9 @@ int32_t GetHoveredFile() {
     int32_t file =
         *reinterpret_cast<int32_t*>(work + kSeqLoadWorkHoveredOffset);
     if (file < 0 || file >= kNumSaveFiles) return -1;
+    // Only offer renaming once the file select screen is actually showing the
+    // file (e.g. not while the "reading save file" message is up).
+    if (!(g_FilesDrawnLastFrame & (1U << file))) return -1;
 
     const TotSaveSlot* slot = GetSaveSlot(file);
     if (!slot || !StateManager::IsSaveSlotValid(slot)) return -1;
@@ -376,9 +457,48 @@ void FileRenameManager::Init() {
         keyGetStickY, [](uint32_t pad) -> uint32_t {
             return IsInputBlocked() ? 0 : g_keyGetStickY_trampoline(pad);
         });
+
+    // Detect dialog boxes being drawn (see file_rename_patches.s).
+    windowDispGX_Message_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_Message, windowDispGX_Message_hook);
+    windowDispGX_System_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_System, windowDispGX_System_hook);
+    windowDispGX_Kanban_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_Kanban, windowDispGX_Kanban_hook);
+    msgWindow_Disp_hook_trampoline = HookDialogDrawFunction(
+        kMsgWindow_Disp, msgWindow_Disp_hook);
+
+    RecordHook((void*)keyGetButtonTrg, (void*)g_keyGetButtonTrg_trampoline);
+    RecordHook((void*)keyGetButtonRep, (void*)g_keyGetButtonRep_trampoline);
+    RecordHook((void*)keyGetButton, (void*)g_keyGetButton_trampoline);
+    RecordHook((void*)keyGetDirTrg, (void*)g_keyGetDirTrg_trampoline);
+    RecordHook((void*)keyGetDirRep, (void*)g_keyGetDirRep_trampoline);
+    RecordHook((void*)keyGetDir, (void*)g_keyGetDir_trampoline);
+    RecordHook((void*)keyGetStickX, (void*)g_keyGetStickX_trampoline);
+    RecordHook((void*)keyGetStickY, (void*)g_keyGetStickY_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_Message, windowDispGX_Message_hook_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_System, windowDispGX_System_hook_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_Kanban, windowDispGX_Kanban_hook_trampoline);
+    RecordHook((void*)kMsgWindow_Disp, msgWindow_Disp_hook_trampoline);
+
+    // Only patch the hooks in while on the file select screen (see Update).
+    SetHooksInstalled(false);
 }
 
 void FileRenameManager::Update() {
+    // Hide the hint while (and shortly after) any dialog box is drawn.
+    if (g_FileRenameDialogDrawn) {
+        g_DialogHideTimer = kDialogHideFrames;
+    } else if (g_DialogHideTimer > 0) {
+        --g_DialogHideTimer;
+    }
+    g_FileRenameDialogDrawn = 0;
+    g_FilesDrawnLastFrame = g_FilesDrawn;
+    g_FilesDrawn = 0;
+
     // After closing the keyboard, keep blocking game input until the buttons
     // that might have closed it are released.
     if (g_WaitForRelease) {
@@ -388,11 +508,17 @@ void FileRenameManager::Update() {
         }
     }
 
+    // Only have the input / dialog hooks patched in on the file select screen.
+    SetHooksInstalled(ttyd::seqdrv::seqGetSeq() == SeqIndex::kLoad);
+
     if (ttyd::seqdrv::seqGetSeq() != SeqIndex::kLoad) {
         // Left the file select screen; discard any rename in progress.
         if (g_Active) Close();
         g_WaitForRelease = false;
         g_HoveredFile = -1;
+        g_LeaveCheckTimer = 0;
+        g_Leaving = false;
+        g_DialogHideTimer = 0;
         return;
     }
 
@@ -401,11 +527,35 @@ void FileRenameManager::Update() {
         return;
     }
 
-    g_HoveredFile = g_WaitForRelease ? -1 : GetHoveredFile();
+    // Detect the file select screen transitioning away after A / B is
+    // pressed while the hint is showing. A fade only counts if it started
+    // after the press (not e.g. the screen still fading in).
+    if (g_HoveredFile >= 0 &&
+        (g_keyGetButtonTrg_trampoline(0) & (ButtonId::A | ButtonId::B))) {
+        g_LeaveCheckTimer = kLeaveCheckFrames;
+        g_FadeFinishedAtPress = ttyd::fadedrv::fadeIsFinish();
+    }
+    if (g_LeaveCheckTimer > 0) {
+        --g_LeaveCheckTimer;
+        if ((g_FadeFinishedAtPress && !ttyd::fadedrv::fadeIsFinish()) ||
+            ttyd::seqdrv::seqGetNextSeq() != SeqIndex::kLoad) {
+            g_Leaving = true;
+            g_LeaveCheckTimer = 0;
+        }
+    }
+
+    g_HoveredFile =
+        (g_WaitForRelease || g_Leaving || g_LeaveCheckTimer > 0 ||
+         g_DialogHideTimer > 0)
+            ? -1 : GetHoveredFile();
     if (g_HoveredFile >= 0 && !ttyd::cardmgr::cardIsExec() &&
         (g_keyGetButtonTrg_trampoline(0) & ButtonId::Y)) {
         Open(g_HoveredFile);
     }
+}
+
+void FileRenameManager::OnFileInfoDrawn(int32_t file) {
+    if (file >= 0 && file < kNumSaveFiles) g_FilesDrawn |= 1U << file;
 }
 
 void FileRenameManager::Draw() {

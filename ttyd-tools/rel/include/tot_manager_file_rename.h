@@ -21,6 +21,9 @@ public:
     static void Update();
     // Code that runs drawing-related code every frame.
     static void Draw();
+    // Called when the file select screen draws an existing file's info;
+    // renaming is only offered for files that are actually being shown.
+    static void OnFileInfoDrawn(int32_t file);
 };
 
 }
