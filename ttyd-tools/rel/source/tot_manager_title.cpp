@@ -20,14 +20,26 @@ namespace {
 constexpr const char* kVersion = "v4.01";
 constexpr const char* kTitleInfo = "v4.01 r62" "\n" "2026-03-11";
 
-// Hint for special save file names, shown on the title screen. Both new files
-// and existing files renamed at the file select screen (Y) get these modes.
+// Hint for special save file names, debug mode cheat codes, and the debug
+// menu's controls, shown on the title screen. Both new files and existing
+// files renamed at the file select screen (Y) get these modes.
 constexpr const char* kSpecialFileNamesInfo =
     "Special file names:\n"
     "RaceMode: Race mode\n"
     "YCNOTGBY: 100% mode\n"
-    "xyzzy: Debug mode (in-game,\n"
-    "  L,Y,L,Y,L,Y,L,Y opens menu)";
+    "xyzzy: Debug mode\n"
+    "\n"
+    "Debug mode only, in-game codes:\n"
+    "L,Y,L,Y,L,Y,L,Y: Open debug menu\n"
+    "R,L,Y,X,B,A,L,A: Get Bump Attack\n"
+    "L,Z,L,Z,L,Z,L,Z: End countdown timer\n"
+    "\n"
+    "Debug menu controls:\n"
+    "D-Pad: Move, Y: Select\n"
+    "(L+Y on achievements: include secret)\n"
+    "Enemies: Up/Down: Slot, Left/Right: Enemy\n"
+    "  (hold L: +/-16), Y: Clear, L+Y: Done\n"
+    "Floor: D-Pad: Change (hold L: +/-8), Y: Set";
 
 // How many times faster than vanilla the title screen's curtain and logo
 // animations play (must be an integer >= 1).
@@ -167,19 +179,20 @@ void TitleScreenManager::Draw() {
                 kTitleInfo, 230, -180, 0xFFu, true, 0xFFFFFFFFu, 0.52f, 
                 0x000000E5u, 8, 8);
 
-            // Draw special file name hints, left-aligned in the bottom-left.
-            const float scale = 0.5f;
+            // Draw special file name / debug mode hints in the top-right.
+            const float scale = 0.42f;
             const float pad = 8.0f;
-            const float left = -290.0f;
-            const float bottom = -215.0f;
+            const float right = 296.0f;
+            const float top = 220.0f;
             float width, height;
             GetTextDimensions(kSpecialFileNamesInfo, scale, &width, &height);
+            const float left = right - width;
             DrawWindow(
-                0x000000E5u, left - pad, bottom + height + pad,
+                0x000000E5u, left - pad, top + pad,
                 width + 2 * pad, height + 2 * pad, 8);
             DrawText(
-                kSpecialFileNamesInfo, left, bottom + height / 2, 0xFFu, true,
-                0xFFFFFFFFu, scale, /* middle-left */ 3);
+                kSpecialFileNamesInfo, left, top, 0xFFu, true,
+                0xFFFFFFFFu, scale, /* top-left */ 0);
         }
     }
 }
