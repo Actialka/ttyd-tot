@@ -396,24 +396,22 @@ EVT_BEGIN(Npc_C_Talk)
 EVT_END()
 
 EVT_BEGIN(Npc_D_Talk)
-    // Print regular hint (or first-time dialogue).
+    // Print greeting (or first-time dialogue).
     USER_FUNC(evtTot_SetConversation, (int32_t)ConversationId::NPC_D)
     USER_FUNC(evtTot_GetNextMessage, LW(0), LW(1))
     USER_FUNC(evt_msg_print, 0, LW(0), 0, PTR("me"))
 
-    // If a follow-up is queued, offer a menu of other topics to ask about.
-    USER_FUNC(evtTot_HasConversationQueued, LW(0))
+    USER_FUNC(evtTot_NpcD_HasTopicMenu, LW(0))
     IF_EQUAL(LW(0), 0)
         RETURN()
     END_IF()
-    USER_FUNC(evtTot_SetConversation, (int32_t)ConversationId::NPC_D)
-    USER_FUNC(evtTot_GetNextMessage, LW(0), LW(1))
-    USER_FUNC(evt_msg_print_add, 0, LW(0))
 
+    // Main topic menu.
     USER_FUNC(evt_msg_select, 0, PTR("tot_npcd_topics"))
     SWITCH(LW(0))
-        CASE_EQUAL(0) GOTO(10)
-        CASE_EQUAL(1) GOTO(20)
+        CASE_EQUAL(0) GOTO(30)
+        CASE_EQUAL(1) GOTO(10)
+        CASE_EQUAL(2) GOTO(20)
         CASE_ETC()    GOTO(99)
     END_SWITCH()
 
@@ -438,6 +436,30 @@ LBL(20)
         CASE_ETC()
             GOTO(99)
     END_SWITCH()
+
+LBL(30)
+    // Achievement hints, paginated; if none available, explain why.
+    USER_FUNC(evtTot_NpcD_GetNumHints, LW(0), LW(1))
+    IF_EQUAL(LW(0), 0)
+        SET(LW(0), LW(1))
+        GOTO(70)
+    END_IF()
+    SET(LW(5), 0)
+LBL(31)
+    USER_FUNC(evtTot_NpcD_GetHintPage, LW(5), LW(0), LW(6), LW(7))
+    USER_FUNC(evt_msg_select, 1, LW(0))
+    IF_SMALL(LW(0), LW(6))
+        USER_FUNC(evtTot_NpcD_GetHintConversation, LW(5), LW(0), LW(0))
+        GOTO(70)
+    END_IF()
+    IF_EQUAL(LW(0), LW(6))
+        IF_EQUAL(LW(7), 1)
+            // "More..." selected; go to next page.
+            ADD(LW(5), 1)
+            GOTO(31)
+        END_IF()
+    END_IF()
+    GOTO(99)
 
 LBL(70)
     USER_FUNC(evtTot_SetConversation, LW(0))

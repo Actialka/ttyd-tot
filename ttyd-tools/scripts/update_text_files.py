@@ -8721,7 +8721,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009118_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to deal with 7 guest\n"
         b"NPCs in one tower run?\n"
         b"<k>\n"
@@ -8744,10 +8745,11 @@ g_PetalburgWestStrings = {
         b"Up to you if you'd rather just\n"
         b"deal with whoever decides to\n"
         b"show up, though.\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009122_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you don't want to use Jumps\n"
         b"or Hammers in battle?\n"
         b"<k>\n"
@@ -8770,10 +8772,11 @@ g_PetalburgWestStrings = {
         b"Even just a First Strike from\n"
         b"Spin Jump or Ultra Hammer\n"
         b"still makes a big difference!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009125_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you've got to finish a run with\n"
         b"all your moves at max level?\n"
         b"<k>\n"
@@ -8801,10 +8804,11 @@ g_PetalburgWestStrings = {
         b"Should be a piece of cake!\n"
         b"<wait 200>Just resist the urge to take\n"
         b"too many new moves.\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009126_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to win a run without\n"
         b"failing any bonus conditions?\n"
         b"<k>\n"
@@ -8862,10 +8866,11 @@ g_PetalburgWestStrings = {
         b"In that case, you'll just have\n"
         b"to give up and start another\n"
         b"run. <wait 250>That's the way it goes!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009127_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to beat every floor\n"
         b"in 3 turns or fewer?\n"
         b"<k>\n"
@@ -8912,10 +8917,11 @@ g_PetalburgWestStrings = {
         b"<p>\n"
         b"That's about all I've got...\n"
         b"<wait 250>Let me know how it goes!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009128_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to do a whole tower\n"
         b"run without taking damage?\n"
         b"<k>\n"
@@ -8973,10 +8979,11 @@ g_PetalburgWestStrings = {
         b"<dynamic 3>Whew!</dynamic> <wait 250>That's a lot of stuff\n"
         b"to keep in mind.<wait 300> Good luck,\n"
         b"<wait 250>hopefully it goes well!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009129_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to win a run\n"
         b"at 200% intensity or higher?\n"
         b"<k>\n"
@@ -9009,10 +9016,11 @@ g_PetalburgWestStrings = {
         b"I wonder how high an intensity\n"
         b"level you could beat a run with?\n"
         b"<wait 350>250%? <wait 350>300%? <wait 350>Hmm...\n"
-        b"<k>\n<o>",
+        b"<k>",
  
     b"tot_di009130_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to win with your\n"
         b"HP, FP or BP at minimum?\n"
         b"<k>\n"
@@ -9035,10 +9043,11 @@ g_PetalburgWestStrings = {
         b"I guess with two of the three\n"
         b"to cover you, doing without one\n"
         b"shouldn't be too bad, right?\n"
-        b"<k>\n<o>",
+        b"<k>",
     
     b"tot_di009131_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to finish a run\n"
         b"with two stats at minimum?\n"
         b"<k>\n"
@@ -9070,10 +9079,11 @@ g_PetalburgWestStrings = {
         b"Plus, you can always rely\n"
         b"on your partners' HP to\n"
         b"protect you from the front!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009140_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to use a Trade Off\n"
         b"turn 1 against the final boss?\n"
         b"<k>\n"
@@ -9096,10 +9106,11 @@ g_PetalburgWestStrings = {
         b"It's not guaranteed to work,\n"
         b"but it could save you a lot of\n"
         b"trouble if it does!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009141_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to Superguard\n"
         b"one of the dragons' bites?\n"
         b"<k>\n"
@@ -9117,10 +9128,11 @@ g_PetalburgWestStrings = {
         b"Maybe one of them always\n"
         b"uses a bite attack under\n"
         b"predictable conditions!\n"
-        b"<k>\n<o>",
+        b"<k>",
     
     b"tot_di009149_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to collect 10 Shine\n"
         b"Sprites in a single run?\n"
         b"<k>\n"
@@ -9138,10 +9150,11 @@ g_PetalburgWestStrings = {
         b"You'll want to take extra\n"
         b"stat increase rewards, if that's\n"
         b"the case. <wait 250>Yup!\n"
-        b"<k>\n<o>",
+        b"<k>",
     
     b"tot_di009150_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to reach 999 coins\n"
         b"on hand in one tower run?\n"
         b"<k>\n"
@@ -9174,10 +9187,11 @@ g_PetalburgWestStrings = {
         b"That's about all I've got. <wait 300>Say,\n"
         b"<wait 200>this could also help if you want\n"
         b"to buy a lot of items at once...\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009156_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to find all the\n"
         b"common and rare items?\n"
         b"<k>\n"
@@ -9215,10 +9229,11 @@ g_PetalburgWestStrings = {
         b"Come to think of it, Zess T.'s\n"
         b"specialty items are probably\n"
         b"worth collecting as well...\n"
-        b"<k>\n<o>",
+        b"<k>",
         
     b"tot_di009177_00":
-        b"Oh, it's you again. <wait 250>You want\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you want\n"
         b"to use a bunch of Star Power\n"
         b"on turn 1 of a battle, eh?\n"
         b"<k>\n"
@@ -9251,10 +9266,11 @@ g_PetalburgWestStrings = {
         b"If all else fails, and if you've\n"
         b"got a lot of max Star Power,\n"
         b"Mystic Eggs will do the trick!\n"
-        b"<k>\n<o>",
+        b"<k>",
         
     b"tot_di009182_00":
-        b"Oh, it's you again. <wait 250>You want\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you want\n"
         b"to beat 7 or more enemy\n"
         b"types in one fight, you say?\n"
         b"<k>\n"
@@ -9282,10 +9298,11 @@ g_PetalburgWestStrings = {
         b"There might be options that\n"
         b"could help as well; <wait 250>you should\n"
         b"chat up Merlon if you see him!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009187_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to beat every unique\n"
         b"final boss on EX difficulty?\n"
         b"<k>\n"
@@ -9323,10 +9340,11 @@ g_PetalburgWestStrings = {
         b"Oh, <wait 200>and you don't need to beat\n"
         b"them all in one go. <wait 250>Each EX\n"
         b"win counts on its own!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009137_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to beat a Shrunk\n"
         b"midboss with Gale or Gulp?\n"
         b"<k>\n"
@@ -9349,10 +9367,11 @@ g_PetalburgWestStrings = {
         b"Just make sure it's Shrunk\n"
         b"when you try it. <wait 250>Those effects\n"
         b"don't last forever, after all!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009139_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get hit by a fully\n"
         b"charged Megaton Bomb?\n"
         b"<k>\n"
@@ -9375,10 +9394,11 @@ g_PetalburgWestStrings = {
         b"And make sure you're not\n"
         b"protected by anything that'd\n"
         b"block the blast, of course!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009146_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to use a Tower Key\n"
         b"when the chests are open?\n"
         b"<k>\n"
@@ -9401,10 +9421,11 @@ g_PetalburgWestStrings = {
         b"You can buy keys from a Mover\n"
         b"on shop floors, <wait 150>if you don't\n"
         b"happen to have one handy.\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009147_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want Zess T. to cook one\n"
         b"of her signature items?\n"
         b"<k>\n"
@@ -9427,10 +9448,11 @@ g_PetalburgWestStrings = {
         b"So hang on to any rare items\n"
         b"you find, <wait 150>in case she shows\n"
         b"up on a shop floor!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009173_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to give one enemy\n"
         b"5 status ailments at once?\n"
         b"<k>\n"
@@ -9458,10 +9480,11 @@ g_PetalburgWestStrings = {
         b"Just watch out for Allergic\n"
         b"status. <wait 250>Once that's on, nothing\n"
         b"else can be added!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009186_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want Infatuated foes to\n"
         b"deal 500 damage in one run?\n"
         b"<k>\n"
@@ -9489,10 +9512,11 @@ g_PetalburgWestStrings = {
         b"It adds up over the whole\n"
         b"run, <wait 150>so you don't need to do it\n"
         b"all in one battle, at least.\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009188_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to fill up a maxed\n"
         b"inventory with 20 items?\n"
         b"<k>\n"
@@ -9515,10 +9539,11 @@ g_PetalburgWestStrings = {
         b"Once your bag's maxed out, <wait 150>just\n"
         b"keep stocking up on items until\n"
         b"there's no room left!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009189_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to defeat Bowser and\n"
         b"Kammy at the same time?\n"
         b"<k>\n"
@@ -9541,20 +9566,16 @@ g_PetalburgWestStrings = {
         b"Just be careful not to let\n"
         b"Kammy heal them both up,\n"
         b"<wait 150>or you'll be back to square one!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009300_00":
-        b"Oh, it's you again. <wait 250>Welcome!\n"
-        b"<k>\n"
         b"<p>\n"
-        b"It seems you probably don't\n"
-        b"need my help at the moment.\n"
-        b"<wait 250>That's good, I guess...\n"
-        b"<k>\n<o>",
+        b"Hmm... <wait 250>it seems you probably\n"
+        b"don't need my help with that\n"
+        b"at the moment. <wait 250>That's good!\n"
+        b"<k>",
 
     b"tot_di009301_00":
-        b"Oh, it's you again. <wait 250>Welcome!\n"
-        b"<k>\n"
         b"<p>\n"
         b"It seems to me that you've\n"
         b"accomplished just about\n"
@@ -9569,10 +9590,11 @@ g_PetalburgWestStrings = {
         b"Right now, just staying in\n"
         b"here seems pretty cozy, though.\n"
         b"Perhaps another time...\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009400_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9595,10 +9617,11 @@ g_PetalburgWestStrings = {
         b"I know he's knowledgeable\n"
         b"about seeds, <wait 200>but maybe he'll\n"
         b"have a lead on this too?\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009401_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9621,10 +9644,11 @@ g_PetalburgWestStrings = {
         b"She's a big fan of your moves,\n"
         b"<wait 200>so maybe she could give you\n"
         b"a special way to use them?\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009402_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9646,10 +9670,11 @@ g_PetalburgWestStrings = {
         b"<p>\n"
         b"Perhaps you could talk to\n"
         b"him and see what he's up to!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009403_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9677,7 +9702,7 @@ g_PetalburgWestStrings = {
         b"Ehh... <wait 150>probably a bit of a\n"
         b"stretch, <wait 150>but who knows?\n"
         b"<wait 250>You might get lucky!\n"
-        b"<k>\n<o>",
+        b"<k>",
 
     b"tot_di009500_00":
         b"<p>\n"
@@ -9906,15 +9931,48 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009600_00":
-        # Follow-up prompt leading into topic menu.
-        b"<p>\n"
-        b"Oh, <wait 150>is there anything else\n"
-        b"you wanted to pick my\n"
-        b"brain about?\n<o>",
+        # Greeting leading into topic menu.
+        b"Oh, it's you again. <wait 250>Welcome!\n"
+        b"<wait 200>What did you want to pick\n"
+        b"my brain about?\n<o>",
 
     b"tot_npcd_topics":
-        b"<select 0 2 0 40>\n"
-        b"Tower rumors\nSecret goals\nNever mind",
+        b"<select 0 3 0 40>\n"
+        b"Achievement tips\nTower rumors\nSecret goals\nNever mind",
+
+    b"tot_npcd_more":       b"More...",
+    b"tot_npcd_nevermind":  b"Never mind",
+
+    # Labels for achievement hints in NPC D's hint menu.
+    b"tot_npcd_l009118":     b"7 guest NPC deals",
+    b"tot_npcd_l009122":     b"No Jumps or Hammers",
+    b"tot_npcd_l009125":     b"All moves maxed",
+    b"tot_npcd_l009126":     b"All bonus conditions",
+    b"tot_npcd_l009127":     b"3 turns per floor",
+    b"tot_npcd_l009128":     b"No damage taken",
+    b"tot_npcd_l009129":     b"200% Intensity",
+    b"tot_npcd_l009130":     b"One stat at 0",
+    b"tot_npcd_l009131":     b"Two stats at 0",
+    b"tot_npcd_l009137":     b"Shrunk midboss KO",
+    b"tot_npcd_l009139":     b"Megaton Bomb hit",
+    b"tot_npcd_l009140":     b"Trade Off on final boss",
+    b"tot_npcd_l009141":     b"Superguard a bite",
+    b"tot_npcd_l009146":     b"Tower Key skip",
+    b"tot_npcd_l009147":     b"Zess T.'s signature",
+    b"tot_npcd_l009149":     b"10 Shine Sprites",
+    b"tot_npcd_l009150":     b"999 coins",
+    b"tot_npcd_l009156":     b"Common & rare items",
+    b"tot_npcd_l009173":     b"5 status ailments",
+    b"tot_npcd_l009177":     b"Turn 1 Special Move",
+    b"tot_npcd_l009182":     b"7 enemy types at once",
+    b"tot_npcd_l009186":     b"Infatuate damage",
+    b"tot_npcd_l009187":     b"Unique bosses on EX",
+    b"tot_npcd_l009188":     b"20-item inventory",
+    b"tot_npcd_l009189":     b"Bowser & Kammy KO",
+    b"tot_npcd_l009400":     b"Run options (seeds)",
+    b"tot_npcd_l009401":     b"Run options (moves)",
+    b"tot_npcd_l009402":     b"Run options (timer)",
+    b"tot_npcd_l009403":     b"Run options (bosses)",
 
     b"tot_npcd_bosses":
         b"<select 0 3 0 40>\n"

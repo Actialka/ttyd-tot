@@ -85,8 +85,8 @@ namespace ConversationId {
         NPC_D_SECRET_BADGE_COMBO,
         NPC_D_SECRET_COINS,
         NPC_D_SECRET_ZERO_STATS,
-        // Follow-up prompt leading into the topic menu.
-        NPC_D_TOPICS        = 9600,
+        // Greeting leading into the topic menu.
+        NPC_D_GREETING      = 9600,
 
         // NPC G (Blue Bub-ulb)
         NPC_G               = 10000,
@@ -274,6 +274,17 @@ EVT_DECLARE_USER_FUNC(evtTot_SetConversation, 1)
 
 // Wrapper to GetNextMessage.
 EVT_DECLARE_USER_FUNC(evtTot_GetNextMessage, 2)
+
+// NPC D hint menu: returns whether to show the topic menu after greeting.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_HasTopicMenu, 1)
+// NPC D hint menu: returns number of achievement hints available, and the
+// conversation to use if there are none.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetNumHints, 2)
+// NPC D hint menu: given a page number, returns a selection string for that
+// page, the number of hints on it, and whether there are further pages.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetHintPage, 4)
+// NPC D hint menu: given a page and option index, returns the conversation.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetHintConversation, 3)
 
 // Returns whether or not there is another conversation queued for afterward.
 EVT_DECLARE_USER_FUNC(evtTot_HasConversationQueued, 1)
