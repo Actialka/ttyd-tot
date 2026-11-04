@@ -207,6 +207,9 @@ void ApplyFixedPatches() {
             if (!g_Mod->state_.Load(save_data)) {
                 g_CueGameOver = true;
             } else {
+                // Enable special file modes (e.g. debug mode) if the file
+                // was renamed to a special name after being created.
+                g_Mod->state_.ApplySpecialFileNameMode();
                 // Apply options specific to loading run in-progress.
                 OptionsManager::OnRunResumeFromFileSelect();
             }

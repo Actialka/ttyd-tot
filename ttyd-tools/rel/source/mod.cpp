@@ -7,6 +7,7 @@
 #include "tot_gon.h"
 #include "tot_manager_cheats.h"
 #include "tot_manager_debug.h"
+#include "tot_manager_file_rename.h"
 #include "tot_manager_timer.h"
 #include "tot_manager_title.h"
 
@@ -62,6 +63,7 @@ void Mod::Init() {
     
     // Hook / patch other functions with custom logic.
     tot::patch::ApplyAllFixedPatches();
+    tot::FileRenameManager::Init();
 }
 
 void Mod::Update() {
@@ -69,6 +71,7 @@ void Mod::Update() {
     tot::CheatsManager::Update();
     tot::TimerManager::Update();
     tot::TitleScreenManager::Update();
+    tot::FileRenameManager::Update();
 }
 
 void Mod::Draw() {
@@ -76,6 +79,7 @@ void Mod::Draw() {
     RegisterDrawCallback(tot::CheatsManager::Draw, CameraId::kDebug3d);
     RegisterDrawCallback(tot::TimerManager::Draw, CameraId::k2d);
     RegisterDrawCallback(tot::TitleScreenManager::Draw, CameraId::k2d);
+    RegisterDrawCallback(tot::FileRenameManager::Draw, CameraId::kDebug3d);
 }
 
 }

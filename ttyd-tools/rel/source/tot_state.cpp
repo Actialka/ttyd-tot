@@ -78,17 +78,41 @@ void StateManager::Init() {
     ResetOptions();
 
     // Enable special file modes, if specific file names are entered.
-    if (!strcmp(ttyd::mariost::g_MarioSt->saveFileName, "RaceMode")) {
-        SetOption(OPTVAL_RACE_MODE_ENABLED);
-        DebugManager::SpecialFileSetup();
+    ApplySpecialFileNameMode();
+}
+
+uint32_t StateManager::GetSpecialFileNameMode(const char* file_name) {
+    if (!strcmp(file_name, "RaceMode")) return OPTVAL_RACE_MODE_ENABLED;
+    if (!strcmp(file_name, "YCNOTGBY")) return OPTVAL_100_MODE_ENABLED;
+    if (!strcmp(file_name, "xyzzy"))    return OPTVAL_DEBUG_MODE_ENABLED;
+    return 0;
+}
+
+bool StateManager::ApplySpecialFileNameMode() {
+    const uint32_t mode =
+        GetSpecialFileNameMode(ttyd::mariost::g_MarioSt->saveFileName);
+    // Nothing to do if the name isn't special, or the mode is already active.
+    if (!mode || CheckOptionValue(mode)) return false;
+
+    SetOption(mode);
+    // Race / 100% modes also unlock logs, items, cosmetics, etc.
+    if (mode != OPTVAL_DEBUG_MODE_ENABLED) DebugManager::SpecialFileSetup();
+    return true;
+}
+
+void StateManager::ComputeSaveChecksum(TotSaveSlot* save) {
+    ComputeChecksum(*save);
+}
+
+bool StateManager::IsSaveSlotValid(const TotSaveSlot* save) {
+    if (save->size != 0x3800) return false;
+    uint32_t checksum = 0U;
+    const uint8_t* ptr = (const uint8_t*)&save->data;
+    for (int32_t i = 0; i < (int32_t)sizeof(save->data); i++) {
+        checksum += ptr[i];
     }
-    if (!strcmp(ttyd::mariost::g_MarioSt->saveFileName, "YCNOTGBY")) {
-        SetOption(OPTVAL_100_MODE_ENABLED);
-        DebugManager::SpecialFileSetup();
-    }
-    if (!strcmp(ttyd::mariost::g_MarioSt->saveFileName, "xyzzy")) {
-        SetOption(OPTVAL_DEBUG_MODE_ENABLED);
-    }
+    return save->checksum1 == checksum && save->checksum2 == ~checksum &&
+        save->data.tot_state.version_ >= kEarliestSupportedVersion;
 }
 
 // Loading / saving functions.
