@@ -42,6 +42,39 @@ constexpr uintptr_t kWindowDispGX_System  = 0x8007d994;
 constexpr uintptr_t kWindowDispGX_Kanban  = 0x8007e9f0;
 constexpr uintptr_t kMsgWindow_Disp       = 0x80080260;
 
+// The hooks below are only needed on the file select screen, so they're only
+// patched in while on it, leaving the rest of the game (e.g. the title
+// screen) running the original code. This records each hooked function's
+// original first instruction, and the branch to the hook that replaced it.
+struct HookPatch {
+    uint32_t* address;
+    uint32_t original;
+    uint32_t hooked;
+};
+constexpr int32_t kMaxHookPatches = 16;
+HookPatch g_HookPatches[kMaxHookPatches];
+int32_t g_NumHookPatches = 0;
+bool g_HooksInstalled = true;
+
+// Records a function hooked with mod::hookFunction, given its trampoline
+// (whose first instruction is the function's original first instruction).
+void RecordHook(void* function, void* trampoline) {
+    if (g_NumHookPatches >= kMaxHookPatches) return;
+    auto* address = reinterpret_cast<uint32_t*>(function);
+    g_HookPatches[g_NumHookPatches++] = {
+        address, *reinterpret_cast<uint32_t*>(trampoline), *address };
+}
+
+void SetHooksInstalled(bool installed) {
+    if (installed == g_HooksInstalled) return;
+    for (int32_t i = 0; i < g_NumHookPatches; ++i) {
+        const auto& patch = g_HookPatches[i];
+        mod::writePatch(
+            patch.address, installed ? patch.hooked : patch.original);
+    }
+    g_HooksInstalled = installed;
+}
+
 void* HookDialogDrawFunction(uintptr_t address, void (*hook)()) {
     return reinterpret_cast<void*>(mod::hookFunction(
         reinterpret_cast<void (*)()>(address), hook));
@@ -434,6 +467,25 @@ void FileRenameManager::Init() {
         kWindowDispGX_Kanban, windowDispGX_Kanban_hook);
     msgWindow_Disp_hook_trampoline = HookDialogDrawFunction(
         kMsgWindow_Disp, msgWindow_Disp_hook);
+
+    RecordHook((void*)keyGetButtonTrg, (void*)g_keyGetButtonTrg_trampoline);
+    RecordHook((void*)keyGetButtonRep, (void*)g_keyGetButtonRep_trampoline);
+    RecordHook((void*)keyGetButton, (void*)g_keyGetButton_trampoline);
+    RecordHook((void*)keyGetDirTrg, (void*)g_keyGetDirTrg_trampoline);
+    RecordHook((void*)keyGetDirRep, (void*)g_keyGetDirRep_trampoline);
+    RecordHook((void*)keyGetDir, (void*)g_keyGetDir_trampoline);
+    RecordHook((void*)keyGetStickX, (void*)g_keyGetStickX_trampoline);
+    RecordHook((void*)keyGetStickY, (void*)g_keyGetStickY_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_Message, windowDispGX_Message_hook_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_System, windowDispGX_System_hook_trampoline);
+    RecordHook(
+        (void*)kWindowDispGX_Kanban, windowDispGX_Kanban_hook_trampoline);
+    RecordHook((void*)kMsgWindow_Disp, msgWindow_Disp_hook_trampoline);
+
+    // Only patch the hooks in while on the file select screen (see Update).
+    SetHooksInstalled(false);
 }
 
 void FileRenameManager::Update() {
@@ -455,6 +507,9 @@ void FileRenameManager::Update() {
             g_WaitForRelease = false;
         }
     }
+
+    // Only have the input / dialog hooks patched in on the file select screen.
+    SetHooksInstalled(ttyd::seqdrv::seqGetSeq() == SeqIndex::kLoad);
 
     if (ttyd::seqdrv::seqGetSeq() != SeqIndex::kLoad) {
         // Left the file select screen; discard any rename in progress.
