@@ -68,6 +68,8 @@ MP3 (MP3 adds a small gap at the start that throws off the loop).
 
 ## Converting
 
+`convert.py` is self-contained, so you can download just that one file.
+
 ```bash
 python3 convert.py /path/to/flac/folder /path/to/extracted/disc
 ```
