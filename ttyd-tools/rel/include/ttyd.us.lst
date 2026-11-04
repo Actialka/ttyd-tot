@@ -1368,7 +1368,11 @@
 800dc6d4:calc3D
 // 800dcbc8:angleABf
 // .data
+80315ac8:psbgmlist
 80316b28:pssfxlist
+
+// dvdfs.o (Dolphin SDK)
+8029fdbc:DVDConvertPathToEntrynum
 
 // sound.o
 800e0c38:SoundEfxStop

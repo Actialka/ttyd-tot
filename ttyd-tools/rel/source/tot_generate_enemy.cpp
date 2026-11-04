@@ -11,6 +11,7 @@
 #include "tot_manager_achievements.h"
 #include "tot_manager_cosmetics.h"
 #include "tot_manager_debug.h"
+#include "tot_manager_music.h"
 
 #include <ttyd/battle.h>
 #include <ttyd/battle_camera.h>
@@ -1151,6 +1152,8 @@ void BuildBattle(
         weights.max_weight = g_CustomAudienceWeights[i];
     }
     
+    // Battle kind, for picking optional remake battle music.
+    int32_t music_kind = MusicManager::BATTLE_NONE;
     if (state.IsFinalBossFloor()) {
         switch (g_Enemies[0]) {
             case BattleUnitType::GOLD_FUZZY:
@@ -1158,21 +1161,38 @@ void BuildBattle(
                 break;
             case BattleUnitType::BOWSER_CH_8:
                 battle->music_name = "BGM_BOSS_STG8_KOOPA";
+                music_kind = MusicManager::BATTLE_BOWSER;
                 break;
             case BattleUnitType::DOOPLISS_CH_8:
                 battle->music_name = "BGM_BOSS_STG4_RUNPELL1";
+                music_kind = MusicManager::BATTLE_DOOPLISS;
                 break;
             default:
                 battle->music_name = "BGM_BOSS_STG1_GONBABA1";
+                switch (g_Enemies[0]) {
+                    case BattleUnitType::HOOKTAIL:
+                        music_kind = MusicManager::BATTLE_HOOKTAIL;
+                        break;
+                    case BattleUnitType::GLOOMTAIL:
+                        music_kind = MusicManager::BATTLE_GLOOMTAIL;
+                        break;
+                    case BattleUnitType::BONETAIL:
+                        music_kind = MusicManager::BATTLE_BONETAIL;
+                        break;
+                }
                 break;
         }
     } else if (state.floor_ == 32) {
         battle->music_name = "BGM_BOSS_STG4_RUNPELL1";
+        music_kind = MusicManager::BATTLE_DOOPLISS;
     } else if (IsMidbossFloor(state.floor_)) {
         battle->music_name = "BGM_KOBOSS_BATTLE1";
+        music_kind = MusicManager::BATTLE_MIDBOSS;
     } else {
         battle->music_name = "BGM_ZAKO_BATTLE1";
+        music_kind = MusicManager::BATTLE_NORMAL;
     }
+    MusicManager::SetBattleKind(music_kind);
     
     // Disallow running from the final boss fight.
     if (state.IsFinalBossFloor()) {
