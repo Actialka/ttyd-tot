@@ -149,6 +149,23 @@ int32_t TimerManager::GetNumberOfBattles() {
     return battles;
 }
 
+int32_t TimerManager::GetCountdownSecondsPerSet() {
+    auto& state = g_Mod->state_;
+    int32_t secs = (16 - state.GetOption(OPT_COUNTDOWN_TIMER)) * 60;
+    switch (state.GetOptionValue(OPT_DIFFICULTY)) {
+        case OPTVAL_DIFFICULTY_FULL:
+        case OPTVAL_DIFFICULTY_FULL_EX:
+            secs = secs * 3 / 2;
+            break;
+    }
+    return secs;
+}
+
+EVT_DEFINE_USER_FUNC(evtTot_TrackCountdownTimeUp) {
+    g_Mod->state_.ChangeOption(STAT_PERM_COUNTDOWN_TIMEUPS, 1);
+    return 2;
+}
+
 EVT_DEFINE_USER_FUNC(evtTot_ToggleIGT) {
     bool toggle = evtGetValue(evt, evt->evtArguments[0]);
     g_Mod->state_.ToggleIGT(toggle);
@@ -252,6 +269,19 @@ EVT_DEFINE_USER_FUNC(evtTot_TrackCompletedRun) {
             break;
         default:
             break;
+    }
+
+    // Track stats for runs cleared with the countdown timer active.
+    if (int32_t countdown = state.GetOption(OPT_COUNTDOWN_TIMER); countdown) {
+        state.ChangeOption(STAT_PERM_COUNTDOWN_CLEARS, 1);
+        if (countdown > state.GetOption(STAT_PERM_COUNTDOWN_MAX_LV)) {
+            state.SetOption(STAT_PERM_COUNTDOWN_MAX_LV, countdown);
+        }
+        int32_t secs_per_set = TimerManager::GetCountdownSecondsPerSet();
+        int32_t best_secs = state.GetOption(STAT_PERM_COUNTDOWN_BEST_SET);
+        if (best_secs == 0 || secs_per_set < best_secs) {
+            state.SetOption(STAT_PERM_COUNTDOWN_BEST_SET, secs_per_set);
+        }
     }
 
     // Check for other run completion achievements.

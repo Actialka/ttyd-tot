@@ -127,6 +127,15 @@ namespace ConversationId {
         NPC_WHITE_FIRST     = 13010,
         NPC_WHITE_PROGRESS  = 13020,
         NPC_WHITE_UNLOCK    = 13030,
+        // After unlock; default (NPC_WHITE) is used if no countdown runs yet.
+        NPC_WHITE_POST_NO_CLEAR = 13040,
+        NPC_WHITE_POST_CLEAR    = 13041,
+        // Endings following countdown timer stats breakdown.
+        NPC_WHITE_END_NO_CLEAR  = 13050,
+        NPC_WHITE_END_LOW,
+        NPC_WHITE_END_MED,
+        NPC_WHITE_END_HIGH,
+        NPC_WHITE_END_MAX,
 
         // Boss battles.
 

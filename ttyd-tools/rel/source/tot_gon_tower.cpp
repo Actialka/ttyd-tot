@@ -675,6 +675,7 @@ EVT_BEGIN(Tower_TimeUpScript)
     ELSE()
         // Died to timeup, on field or in battle.
         SET((int32_t)GSW_NpcA_SpecialConversation, 40)
+        USER_FUNC(evtTot_TrackCountdownTimeUp)
     END_IF()
     
     USER_FUNC(evtTot_ClearBattleResult)
