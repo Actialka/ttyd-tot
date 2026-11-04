@@ -1,0 +1,72 @@
+# Builds the mod's REL (gon.rel) for the US version of TTYD.
+#
+# To test a build: open this workflow's run in the Actions tab, download the
+# "gon-rel" artifact, and copy gon.rel over files/rel/gon.rel in an extracted
+# copy of the patched game.
+name: Build gon.rel
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # devkitPPC r41 (GCC 12.1). Newer releases (GCC 13+) refuse the mod's use of
+  # <vector> under -ffreestanding, so keep this pinned unless that changes.
+  DEVKITPPC_IMAGE: devkitpro/devkitppc:20230110
+  # PistonMiner's ttyd-tools, for elf2rel.
+  TTYD_TOOLS_REPO: PistonMiner/ttyd-tools
+  TTYD_TOOLS_COMMIT: 88344a6d07d74730bdc6a12906ce8de995729831
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out mod
+        uses: actions/checkout@v4
+
+      - name: Check out ttyd-tools (for elf2rel)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TTYD_TOOLS_REPO }}
+          ref: ${{ env.TTYD_TOOLS_COMMIT }}
+          path: _ttyd-tools
+
+      - name: Build elf2rel
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libboost-program-options-dev
+          E=_ttyd-tools/ttyd-tools/elf2rel
+          # elf2rel.h uses uint8_t without including <cstdint>.
+          g++ -O2 -std=c++17 -include cstdint -I"$E" "$E/elf2rel.cpp" \
+            -o "$RUNNER_TEMP/elf2rel" -lboost_program_options
+
+      - name: Compile mod (devkitPPC)
+        run: |
+          # ELF2REL=true skips the REL step inside the container; elf2rel
+          # runs on the host afterwards, since it was built against the
+          # host's libraries.
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE":/src -w /src/ttyd-tools/rel \
+            -e TOT_TTYDTOOLS=/tmp/ttyd-tools \
+            "$DEVKITPPC_IMAGE" \
+            make VERSION=us ELF2REL=true -j"$(nproc)"
+
+      - name: Convert ELF to REL
+        working-directory: ttyd-tools/rel
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" .
+          "$RUNNER_TEMP/elf2rel" rel.us.elf -s include/ttyd.us.lst --rel-id 8
+          mkdir -p "$RUNNER_TEMP/out"
+          cp rel.us.rel "$RUNNER_TEMP/out/gon.rel"
+          ls -l "$RUNNER_TEMP/out/gon.rel"
+
+      - name: Upload gon.rel
+        uses: actions/upload-artifact@v4
+        with:
+          name: gon-rel
+          path: ${{ runner.temp }}/out/gon.rel
+          if-no-files-found: error
