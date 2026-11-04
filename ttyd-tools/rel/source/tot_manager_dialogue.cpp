@@ -13,6 +13,7 @@
 #include <ttyd/evtmgr.h>
 #include <ttyd/evtmgr_cmd.h>
 #include <ttyd/mario_party.h>
+#include <ttyd/msgdrv.h>
 #include <ttyd/system.h>
 
 #include <cinttypes>
@@ -46,6 +47,13 @@ int8_t kPartnerConversation[] = { 1, -1 };
 int32_t g_ConversationId = 0;
 int8_t* g_ConversationPtr = nullptr;
 int32_t g_ConversationStep = 0;
+
+// Achievement hints NPC D can currently give, for the hint selection menu.
+int16_t g_NpcDHints[AchievementId::MAX_ACHIEVEMENT + 10];
+int32_t g_NpcDNumHints = 0;
+bool g_NpcDAllDone = false;
+bool g_NpcDShowMenu = false;
+constexpr const int32_t kNpcDHintsPerPage = 4;
 
 // Used to indicate where the next conversation should pick up, for
 // conversations with programmatic beginnings / endings like NPC G's.
@@ -229,17 +237,23 @@ void DialogueManager::SetConversation(int32_t id) {
             break;
         }
         case ConversationId::NPC_D: {
+            g_NpcDShowMenu = false;
+            g_NpcDNumHints = 0;
             if (completed_runs < 1 || !GetSWF(GSWF_NpcD_FirstTimeChat)) {
                 SetSWF(GSWF_NpcD_FirstTimeChat);
                 break;
             }
+
+            // Greet the player, then let them pick a topic from a menu.
+            g_ConversationId = ConversationId::NPC_D_GREETING;
+            g_NpcDShowMenu = true;
 
             int8_t const* grid;
             int8_t const* states;
             AchievementsManager::GetAchievementGrid(&grid);
             AchievementsManager::GetAchievementStates(&states, false);
 
-            int16_t ids[AchievementId::MAX_ACHIEVEMENT + 10];
+            int16_t* ids = g_NpcDHints;
             int32_t num_cvs = 0;
             int32_t num_achievements = 0;
             int32_t num_total_achievements = 0;
@@ -269,8 +283,22 @@ void DialogueManager::SetConversation(int32_t id) {
                         case AchievementId::MISC_RUN_COINS_999:
                         case AchievementId::V2_MISC_SP_TURN1:
                         case AchievementId::V3_RUN_DEFEAT_7_TYPES:
+                        case AchievementId::V3_AGG_BOSS_ALL_EX:
+                        case AchievementId::MISC_ZESS_SIGNATURE:
+                        case AchievementId::MISC_KEY_SKIP_CHEST:
+                        case AchievementId::V3_RUN_ITEMS_FULL:
+                        case AchievementId::V2_MISC_STATUS_5:
+                        case AchievementId::V3_MISC_INFATUATE_DAMAGE:
+                        case AchievementId::MISC_SHRUNK_OHKO:
+                        case AchievementId::MISC_MEGATON_BOMB:
                             ids[num_cvs++] =
                                 ConversationId::NPC_D_CVS_BASE + grid[i];
+                            break;
+                        case AchievementId::V3_RUN_BOSS_SIMULTANEOUS:
+                            // Only hint once Bowser & Kammy aren't a spoiler.
+                            if (GetSWF(GSWF_SecretBoss2_Beaten))
+                                ids[num_cvs++] =
+                                    ConversationId::NPC_D_CVS_BASE + grid[i];
                             break;
                         case AchievementId::META_ITEM_LOG_BASIC:
                             // Only hint after Zess T. isn't a spoiler.
@@ -311,13 +339,47 @@ void DialogueManager::SetConversation(int32_t id) {
                 }
             }
 
-            if (num_achievements == num_total_achievements) {
-                g_ConversationId = ConversationId::NPC_D_ALL_DONE;
-            } else if (num_cvs < 1) {
-                g_ConversationId = ConversationId::NPC_D_NONE_ACTIVE;
-            } else {
-                int32_t cv_id = coins_earned % num_cvs;
-                g_ConversationId = ids[cv_id];
+            // Sort available hints by id, so they're listed consistently.
+            for (int32_t i = 1; i < num_cvs; ++i) {
+                int16_t id = ids[i];
+                int32_t j = i - 1;
+                for (; j >= 0 && ids[j] > id; --j) ids[j + 1] = ids[j];
+                ids[j + 1] = id;
+            }
+            g_NpcDNumHints = num_cvs;
+            g_NpcDAllDone = num_achievements == num_total_achievements;
+            break;
+        }
+        // For tower rumors / secret goals the player has already completed,
+        // swap to a short reply instead of the full hint.
+        case ConversationId::NPC_D_BOSS_1:
+        case ConversationId::NPC_D_BOSS_2:
+        case ConversationId::NPC_D_BOSS_3: {
+            constexpr const int32_t kBeatenFlags[] = {
+                GSWF_SecretBoss1_Beaten,
+                GSWF_SecretBoss2_Beaten,
+                GSWF_SecretBoss3_Beaten,
+            };
+            int32_t index = id - ConversationId::NPC_D_BOSS_1;
+            if (GetSWF(kBeatenFlags[index])) {
+                g_ConversationId = ConversationId::NPC_D_BOSS_1_DONE + index;
+            }
+            break;
+        }
+        case ConversationId::NPC_D_SECRET_DAMAGE:
+        case ConversationId::NPC_D_SECRET_BADGE_COMBO:
+        case ConversationId::NPC_D_SECRET_COINS:
+        case ConversationId::NPC_D_SECRET_ZERO_STATS: {
+            constexpr const int32_t kAchievements[] = {
+                AchievementId::SECRET_DAMAGE,
+                AchievementId::SECRET_BADGE_COMBO,
+                AchievementId::SECRET_COINS,
+                AchievementId::SECRET_ZERO_STATS_3,
+            };
+            int32_t index = id - ConversationId::NPC_D_SECRET_DAMAGE;
+            if (state.GetOption(FLAGS_ACHIEVEMENT, kAchievements[index])) {
+                g_ConversationId =
+                    ConversationId::NPC_D_SECRET_DAMAGE_DONE + index;
             }
             break;
         }
@@ -816,6 +878,59 @@ EVT_DEFINE_USER_FUNC(evtTot_GetNextMessage) {
     evtSetValue(evt, evt->evtArguments[0], PTR(msg));
     evtSetValue(evt, evt->evtArguments[1], speaker_type);
 
+    return 2;
+}
+
+EVT_DEFINE_USER_FUNC(evtTot_NpcD_HasTopicMenu) {
+    evtSetValue(evt, evt->evtArguments[0], g_NpcDShowMenu);
+    return 2;
+}
+
+EVT_DEFINE_USER_FUNC(evtTot_NpcD_GetNumHints) {
+    evtSetValue(evt, evt->evtArguments[0], g_NpcDNumHints);
+    // Conversation to use if there are no hints to choose from.
+    evtSetValue(evt, evt->evtArguments[1], g_NpcDAllDone
+        ? ConversationId::NPC_D_ALL_DONE : ConversationId::NPC_D_NONE_ACTIVE);
+    return 2;
+}
+
+EVT_DEFINE_USER_FUNC(evtTot_NpcD_GetHintPage) {
+    static char buf[320];
+    int32_t page = evtGetValue(evt, evt->evtArguments[0]);
+    int32_t start = page * kNpcDHintsPerPage;
+    int32_t num_on_page = g_NpcDNumHints - start;
+    if (num_on_page > kNpcDHintsPerPage) num_on_page = kNpcDHintsPerPage;
+    if (num_on_page < 0) num_on_page = 0;
+    bool has_more = start + num_on_page < g_NpcDNumHints;
+
+    // Hints on this page, followed by "More..." or "Never mind";
+    // cancelling returns an out-of-range index, treated as "Never mind".
+    int32_t num_options = num_on_page + 1;
+    char* p = buf;
+    p += sprintf(p, "<select 0 %" PRId32 " 0 %d>",
+        num_options, num_options > 4 ? 60 : 40);
+    for (int32_t i = 0; i < num_on_page; ++i) {
+        char key[24];
+        sprintf(key, "tot_npcd_l%06" PRId32,
+            static_cast<int32_t>(g_NpcDHints[start + i]));
+        p += sprintf(p, "\n%s", ttyd::msgdrv::msgSearch(key));
+    }
+    p += sprintf(p, "\n%s", ttyd::msgdrv::msgSearch(
+        has_more ? "tot_npcd_more" : "tot_npcd_nevermind"));
+
+    evtSetValue(evt, evt->evtArguments[1], PTR(buf));
+    evtSetValue(evt, evt->evtArguments[2], num_on_page);
+    evtSetValue(evt, evt->evtArguments[3], has_more);
+    return 2;
+}
+
+EVT_DEFINE_USER_FUNC(evtTot_NpcD_GetHintConversation) {
+    int32_t page = evtGetValue(evt, evt->evtArguments[0]);
+    int32_t index = evtGetValue(evt, evt->evtArguments[1]);
+    int32_t hint = page * kNpcDHintsPerPage + index;
+    evtSetValue(evt, evt->evtArguments[2],
+        hint >= 0 && hint < g_NpcDNumHints
+            ? g_NpcDHints[hint] : ConversationId::NPC_D_NONE_ACTIVE);
     return 2;
 }
 

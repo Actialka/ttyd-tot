@@ -8721,7 +8721,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009118_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to deal with 7 guest\n"
         b"NPCs in one tower run?\n"
         b"<k>\n"
@@ -8747,7 +8748,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009122_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you don't want to use Jumps\n"
         b"or Hammers in battle?\n"
         b"<k>\n"
@@ -8773,7 +8775,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009125_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you've got to finish a run with\n"
         b"all your moves at max level?\n"
         b"<k>\n"
@@ -8804,7 +8807,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009126_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to win a run without\n"
         b"failing any bonus conditions?\n"
         b"<k>\n"
@@ -8865,7 +8869,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009127_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to beat every floor\n"
         b"in 3 turns or fewer?\n"
         b"<k>\n"
@@ -8915,7 +8920,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009128_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to do a whole tower\n"
         b"run without taking damage?\n"
         b"<k>\n"
@@ -8976,7 +8982,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009129_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to win a run\n"
         b"at 200% intensity or higher?\n"
         b"<k>\n"
@@ -9012,7 +9019,8 @@ g_PetalburgWestStrings = {
         b"<k>",
  
     b"tot_di009130_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to win with your\n"
         b"HP, FP or BP at minimum?\n"
         b"<k>\n"
@@ -9038,7 +9046,8 @@ g_PetalburgWestStrings = {
         b"<k>",
     
     b"tot_di009131_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to finish a run\n"
         b"with two stats at minimum?\n"
         b"<k>\n"
@@ -9073,7 +9082,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009140_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to use a Trade Off\n"
         b"turn 1 against the final boss?\n"
         b"<k>\n"
@@ -9099,7 +9109,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009141_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to Superguard\n"
         b"one of the dragons' bites?\n"
         b"<k>\n"
@@ -9120,7 +9131,8 @@ g_PetalburgWestStrings = {
         b"<k>",
     
     b"tot_di009149_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to collect 10 Shine\n"
         b"Sprites in a single run?\n"
         b"<k>\n"
@@ -9141,7 +9153,8 @@ g_PetalburgWestStrings = {
         b"<k>",
     
     b"tot_di009150_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to reach 999 coins\n"
         b"on hand in one tower run?\n"
         b"<k>\n"
@@ -9177,7 +9190,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009156_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you're trying to find all the\n"
         b"common and rare items?\n"
         b"<k>\n"
@@ -9218,7 +9232,8 @@ g_PetalburgWestStrings = {
         b"<k>",
         
     b"tot_di009177_00":
-        b"Oh, it's you again. <wait 250>You want\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you want\n"
         b"to use a bunch of Star Power\n"
         b"on turn 1 of a battle, eh?\n"
         b"<k>\n"
@@ -9254,7 +9269,8 @@ g_PetalburgWestStrings = {
         b"<k>",
         
     b"tot_di009182_00":
-        b"Oh, it's you again. <wait 250>You want\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you want\n"
         b"to beat 7 or more enemy\n"
         b"types in one fight, you say?\n"
         b"<k>\n"
@@ -9284,18 +9300,282 @@ g_PetalburgWestStrings = {
         b"chat up Merlon if you see him!\n"
         b"<k>",
 
-    b"tot_di009300_00":
-        b"Oh, it's you again. <wait 250>Welcome!\n"
+    b"tot_di009187_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to beat every unique\n"
+        b"final boss on EX difficulty?\n"
         b"<k>\n"
         b"<p>\n"
-        b"It seems you probably don't\n"
-        b"need my help at the moment.\n"
-        b"<wait 250>That's good, I guess...\n"
+        b"Well, <wait 200>first off, a word of\n"
+        b"warning. <wait 250>The top of the tower\n"
+        b"is extra nasty on EX...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"You'll have to beat Gloomtail,\n"
+        b"<wait 200>and then Bonetail right after!\n"
+        b"<wait 250><dynamic 3>Two</dynamic> dragons, back to back!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So make sure you save some\n"
+        b"of your strength <wait 150>and items\n"
+        b"for that second fight.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Beating Bonetail takes care\n"
+        b"of one. <wait 250>As for the others,\n"
+        b"<wait 150>once you've beaten them...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"You can choose to fight them\n"
+        b"with the Final Boss option.\n"
+        b"<wait 250>That doesn't lower Intensity!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Just steer clear of any options\n"
+        b"that <dynamic 3>do</dynamic> lower it, <wait 200>or your win\n"
+        b"won't count for this one.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Oh, <wait 200>and you don't need to beat\n"
+        b"them all in one go. <wait 250>Each EX\n"
+        b"win counts on its own!\n"
+        b"<k>",
+
+    b"tot_di009137_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to beat a Shrunk\n"
+        b"midboss with Gale or Gulp?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, midbosses are always\n"
+        b"Huge, <wait 150>so normally those moves\n"
+        b"won't budge them at all...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"But if you can Shrink one,\n"
+        b"<wait 200>it'll lose that Huge status and\n"
+        b"be small enough to work on!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Gulp works best if its HP is\n"
+        b"low, <wait 150>since it'll struggle a lot\n"
+        b"less that way.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Just make sure it's Shrunk\n"
+        b"when you try it. <wait 250>Those effects\n"
+        b"don't last forever, after all!\n"
+        b"<k>",
+
+    b"tot_di009139_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to get hit by a fully\n"
+        b"charged Megaton Bomb?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Heh, <wait 150>that's Bobbery's move,\n"
+        b"<wait 150>right? <wait 250>It hits <dynamic 3>everyone</dynamic> on the\n"
+        b"field when it goes off...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Including you and your partner!\n"
+        b"<wait 250>So you just have to be around\n"
+        b"when it explodes.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"For full power, you'll have\n"
+        b"to nail every bar of the Action\n"
+        b"Command when setting it.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"And make sure you're not\n"
+        b"protected by anything that'd\n"
+        b"block the blast, of course!\n"
+        b"<k>",
+
+    b"tot_di009146_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to use a Tower Key\n"
+        b"when the chests are open?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, normally the door stays\n"
+        b"locked until you beat the floor\n"
+        b"and claim one of the chests.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So beat the enemies first,\n"
+        b"<wait 200>then use your key on the lock\n"
+        b"instead of opening a chest!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"You'll miss out on a reward,\n"
+        b"<wait 150>but sometimes skipping one\n"
+        b"is worth it, I suppose.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"You can buy keys from a Mover\n"
+        b"on shop floors, <wait 150>if you don't\n"
+        b"happen to have one handy.\n"
+        b"<k>",
+
+    b"tot_di009147_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want Zess T. to cook one\n"
+        b"of her signature items?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Those are her specialty\n"
+        b"recipes! <wait 250>She only offers them\n"
+        b"for the right ingredients...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Specifically, two different\n"
+        b"rare items at once. <wait 250>She'll whip\n"
+        b"up something special with them!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"It costs a bit more than her\n"
+        b"regular recipes, <wait 150>but you'll get\n"
+        b"two of the result, at least.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So hang on to any rare items\n"
+        b"you find, <wait 150>in case she shows\n"
+        b"up on a shop floor!\n"
+        b"<k>",
+
+    b"tot_di009173_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to give one enemy\n"
+        b"5 status ailments at once?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Phew, <wait 150>that's a lot of misery\n"
+        b"for one poor foe. <wait 250>You'll need\n"
+        b"plenty of different effects...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Things like Sleep, Dizzy, Burn,\n"
+        b"Poison, Slow, and so forth.\n"
+        b"<wait 250>Those all count, of course.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"But lowered ATK or DEF and\n"
+        b"Shrink count as ailments too,\n"
+        b"<wait 150>so don't forget about those!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Pick a sturdy foe that won't\n"
+        b"go down too fast, <wait 150>and stack\n"
+        b"everything you've got on it.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Just watch out for Allergic\n"
+        b"status. <wait 250>Once that's on, nothing\n"
+        b"else can be added!\n"
+        b"<k>",
+
+    b"tot_di009186_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want Infatuated foes to\n"
+        b"deal 500 damage in one run?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"That's a lot of lovestruck\n"
+        b"fighting! <wait 250>Vivian's Infatuate is\n"
+        b"the way to win foes over...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"It doesn't work on midbosses\n"
+        b"or the big bosses, though, <wait 150>and\n"
+        b"only one foe at a time.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So try to charm a hard-hitting\n"
+        b"enemy, <wait 150>and let it go to town on\n"
+        b"its old friends for a while.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Only their attacks count, so\n"
+        b"don't finish the fight too fast\n"
+        b"yourself! <wait 250>Let them do the work.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"It adds up over the whole\n"
+        b"run, <wait 150>so you don't need to do it\n"
+        b"all in one battle, at least.\n"
+        b"<k>",
+
+    b"tot_di009188_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to fill up a maxed\n"
+        b"inventory with 20 items?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, you'll need a bigger bag\n"
+        b"first! <wait 250>Strange Sack rewards\n"
+        b"give you more room each time.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"By default, each one adds two\n"
+        b"slots, <wait 150>so it'll take a good few\n"
+        b"of them to max it out...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"There's an option that makes\n"
+        b"them add three slots each, <wait 150>if\n"
+        b"you've unlocked it, though.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Once your bag's maxed out, <wait 150>just\n"
+        b"keep stocking up on items until\n"
+        b"there's no room left!\n"
+        b"<k>",
+
+    b"tot_di009189_00":
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
+        b"you want to defeat Bowser and\n"
+        b"Kammy at the same time?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Wow, <wait 150>you'll have to get both\n"
+        b"of them low on HP, <wait 150>without\n"
+        b"finishing either one off.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Then you can finish them both\n"
+        b"in one go with a move that hits\n"
+        b"all the enemies at once!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"It might be tricky to keep\n"
+        b"track of both of their HP, <wait 150>so\n"
+        b"a Tattle or two could help.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Just be careful not to let\n"
+        b"Kammy heal them both up,\n"
+        b"<wait 150>or you'll be back to square one!\n"
+        b"<k>",
+
+    b"tot_di009300_00":
+        b"<p>\n"
+        b"Hmm... <wait 250>it seems you probably\n"
+        b"don't need my help with that\n"
+        b"at the moment. <wait 250>That's good!\n"
         b"<k>",
 
     b"tot_di009301_00":
-        b"Oh, it's you again. <wait 250>Welcome!\n"
-        b"<k>\n"
         b"<p>\n"
         b"It seems to me that you've\n"
         b"accomplished just about\n"
@@ -9313,7 +9593,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009400_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9339,7 +9620,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009401_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9365,7 +9647,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009402_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9390,7 +9673,8 @@ g_PetalburgWestStrings = {
         b"<k>",
 
     b"tot_di009403_00":
-        b"Oh, it's you again. <wait 250>You say\n"
+        b"<p>\n"
+        b"Ah, <wait 150>so you say\n"
         b"you want to get access to\n"
         b"every tower run option?\n"
         b"<k>\n"
@@ -9419,6 +9703,356 @@ g_PetalburgWestStrings = {
         b"stretch, <wait 150>but who knows?\n"
         b"<wait 250>You might get lucky!\n"
         b"<k>",
+
+    b"tot_di009500_00":
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say there's\n"
+        b"sometimes no dragon up there...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Instead, <wait 150>something else is\n"
+        b"waiting at the top...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Something shiny and golden,\n"
+        b"<wait 200>with a whole swarm of fuzzy\n"
+        b"little friends in tow!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Supposedly, it only shows up\n"
+        b"for folks who've already\n"
+        b"cleared that tower once.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"And I hear it's drawn to\n"
+        b"unnerving swarming sounds,\n"
+        b"<wait 150>like the ones Smorg FX makes.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"If that's the only FX you have\n"
+        b"on, <wait 200>I bet it'd come out just to\n"
+        b"see what all the buzz is about!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I think you can get that FX\n"
+        b"once Zess T. has cooked one\n"
+        b"of her signature dishes...\n"
+        b"<k>",
+
+    b"tot_di009501_00":
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say a\n"
+        b"certain spiky-shelled king...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"And his witchy assistant\n"
+        b"have been spotted up there!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Supposedly, they'll only show\n"
+        b"up for folks who've already\n"
+        b"cleared that tower once.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 200>you know who that king\n"
+        b"is always chasing after.\n"
+        b"<wait 250>A certain princess, right?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So if your attacks had a\n"
+        b"positively peachy sound to\n"
+        b"them, <wait 150>like Peach FX...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Especially if it's the only\n"
+        b"FX you have on, <wait 200>I bet he'd\n"
+        b"come storming right in!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I think you can get that FX\n"
+        b"by clearing Hooktail's tower\n"
+        b"really quickly. <wait 250>Good luck!\n"
+        b"<k>",
+
+    b"tot_di009502_00":
+        b"<p>\n"
+        b"Oh, the rumors about the top\n"
+        b"of the tower? <wait 250>Folks say a\n"
+        b"sheet-wearing trickster...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Has been lurking around\n"
+        b"up there lately!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Supposedly, he'll only show\n"
+        b"up for folks who've already\n"
+        b"cleared that tower once.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Word is, <wait 150>he can't stand the\n"
+        b"sound of evil cackling. <wait 250>Funny,\n"
+        b"since he does plenty himself!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"So if your attacks cackled\n"
+        b"along with every hit... <wait 250>I bet\n"
+        b"he'd show up to complain!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Especially if that's the only\n"
+        b"FX you have on. <wait 200>He'd surely\n"
+        b"want a word with you then!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I think you can get an FX like\n"
+        b"that once Zess T. has cooked\n"
+        b"one of her signature dishes...\n"
+        b"<k>",
+
+    b"tot_di009510_00":
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"take exactly 654 damage in\n"
+        b"a single tower run, <wait 150>eh?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"What a weirdly specific goal!\n"
+        b"<wait 250>Well, I'd guess you'd have to\n"
+        b"finish the run for it to count.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Damage your partners take\n"
+        b"probably counts too, <wait 200>so keep\n"
+        b"an eye on everyone's hits.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"The Journal keeps track of\n"
+        b"stats for your current run,\n"
+        b"<wait 150>so you can check your total.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Then, near the end, <wait 200>you can\n"
+        b"take a few small hits on\n"
+        b"purpose to land it exactly!\n"
+        b"<k>",
+
+    b"tot_di009511_00":
+        b"<p>\n"
+        b"So, <wait 150>you're trying to let\n"
+        b"someone attack with Jumpman\n"
+        b"& Hammerman on, <wait 150>eh?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Hmm... <wait 250>that's a strange one.\n"
+        b"<wait 250>Those badges only matter if\n"
+        b"they're on <dynamic 3>your</dynamic> moves, right?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Unless... <wait 250>someone out there\n"
+        b"could copy your moves <wait 150>and\n"
+        b"your badges, too?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I've heard whispers of a\n"
+        b"cackling trickster who loves\n"
+        b"to play dress-up...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"If he ever pretended to be\n"
+        b"you with both of those on...\n"
+        b"<wait 250>What would he even do?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I'd sure love to see the look\n"
+        b"on his face when he figures\n"
+        b"that out! <wait 250>Heh heh...\n"
+        b"<k>",
+
+    b"tot_di009512_00":
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"spend exactly 417 coins in\n"
+        b"a single tower run, <wait 150>eh?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"What a weirdly specific goal!\n"
+        b"<wait 250>Well, I'd guess you'd have to\n"
+        b"finish the run for it to count.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Shopping at Charlieton's, <wait 150>or\n"
+        b"paying the other guests should\n"
+        b"all add to your total, I think.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"The Journal keeps track of\n"
+        b"stats for your current run,\n"
+        b"<wait 150>so you can check your total.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Then you can save a few\n"
+        b"cheap purchases for later\n"
+        b"to land it exactly!\n"
+        b"<k>",
+
+    b"tot_di009513_00":
+        b"<p>\n"
+        b"So, <wait 150>you're trying to\n"
+        b"finish a run with all your\n"
+        b"stats at level 0, <wait 150>eh?\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Wow, <wait 200>you sure like a challenge.\n"
+        b"<wait 250>No HP, FP or BP to speak of\n"
+        b"sounds pretty rough...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"You could set how much HP, FP\n"
+        b"and BP you get per level to 0\n"
+        b"in the tower run options.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Or, <wait 200>if you run into Chet Rippo,\n"
+        b"he'll gladly trade your stat\n"
+        b"levels away for something else.\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Just make sure every other\n"
+        b"custom setting is left at its\n"
+        b"default, <wait 150>or it won't count!\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Your partners will have to do\n"
+        b"most of the heavy lifting, <wait 200>so\n"
+        b"pick some sturdy ones!\n"
+        b"<k>",
+
+    # Short replies for tower rumors / secret goals already completed.
+    b"tot_di009530_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already fought it?\n"
+        b"<wait 250>Wow! <wait 150>Folks are still talking\n"
+        b"about that golden swarm...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick it in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009531_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already faced them?\n"
+        b"<wait 250>Wow! <wait 150>I hear that king's still\n"
+        b"fuming about it...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick them in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009532_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already met him?\n"
+        b"<wait 250>Wow! <wait 150>I bet he didn't take\n"
+        b"losing very well...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick him in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009540_00":
+        b"<p>\n"
+        b"Wait, <wait 150>you already took exactly\n"
+        b"654 damage in one run? <wait 250>That's\n"
+        b"some precise suffering...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I'm not sure I'd want to\n"
+        b"try that one myself. <wait 250>Heh...\n"
+        b"<k>",
+
+    b"tot_di009541_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you already pulled that\n"
+        b"one off? <wait 250>I wish I'd seen that\n"
+        b"trickster's face! <wait 250>Heh heh...\n"
+        b"<k>",
+
+    b"tot_di009542_00":
+        b"<p>\n"
+        b"Exactly 417 coins? <wait 250>You must've\n"
+        b"counted every last one!\n"
+        b"<wait 250>That's dedication.\n"
+        b"<k>",
+
+    b"tot_di009543_00":
+        b"<p>\n"
+        b"You already beat a run with\n"
+        b"all your stats at 0? <wait 250>Wow...\n"
+        b"<wait 250>you're tougher than you look!\n"
+        b"<k>",
+
+    b"tot_di009600_00":
+        # Greeting leading into topic menu.
+        b"Oh, it's you again. <wait 250>Welcome!\n"
+        b"<wait 200>What did you want to pick\n"
+        b"my brain about?\n<o>",
+
+    b"tot_npcd_topics":
+        b"<select 0 3 0 40>\n"
+        b"Achievement tips\nTower rumors\nSecret goals\nNever mind",
+
+    b"tot_npcd_more":       b"More...",
+    b"tot_npcd_nevermind":  b"Never mind",
+
+    # Labels for achievement hints in NPC D's hint menu.
+    b"tot_npcd_l009118":     b"7 guest NPC deals",
+    b"tot_npcd_l009122":     b"No Jumps or Hammers",
+    b"tot_npcd_l009125":     b"All moves maxed",
+    b"tot_npcd_l009126":     b"All bonus conditions",
+    b"tot_npcd_l009127":     b"3 turns per floor",
+    b"tot_npcd_l009128":     b"No damage taken",
+    b"tot_npcd_l009129":     b"200% Intensity",
+    b"tot_npcd_l009130":     b"One stat at 0",
+    b"tot_npcd_l009131":     b"Two stats at 0",
+    b"tot_npcd_l009137":     b"Shrunk midboss KO",
+    b"tot_npcd_l009139":     b"Megaton Bomb hit",
+    b"tot_npcd_l009140":     b"Trade Off on final boss",
+    b"tot_npcd_l009141":     b"Superguard a bite",
+    b"tot_npcd_l009146":     b"Tower Key skip",
+    b"tot_npcd_l009147":     b"Zess T.'s signature",
+    b"tot_npcd_l009149":     b"10 Shine Sprites",
+    b"tot_npcd_l009150":     b"999 coins",
+    b"tot_npcd_l009156":     b"Common & rare items",
+    b"tot_npcd_l009173":     b"5 status ailments",
+    b"tot_npcd_l009177":     b"Turn 1 Special Move",
+    b"tot_npcd_l009182":     b"7 enemy types at once",
+    b"tot_npcd_l009186":     b"Infatuate damage",
+    b"tot_npcd_l009187":     b"Unique bosses on EX",
+    b"tot_npcd_l009188":     b"20-item inventory",
+    b"tot_npcd_l009189":     b"Bowser & Kammy KO",
+    b"tot_npcd_l009400":     b"Run options (seeds)",
+    b"tot_npcd_l009401":     b"Run options (moves)",
+    b"tot_npcd_l009402":     b"Run options (timer)",
+    b"tot_npcd_l009403":     b"Run options (bosses)",
+
+    b"tot_npcd_bosses":
+        b"<select 0 3 0 40>\n"
+        b"A golden swarm\nA king and a witch\nA sheet trickster\nNever mind",
+
+    b"tot_npcd_secrets":
+        b"<select 0 4 0 60>\n"
+        b"654 damage\nJumpman & Hammerman\n417 coins\nAll stats at 0\nNever mind",
+
+    b"tot_npcd_decline":
+        b"<p>\nAlright, <wait 150>come back anytime!\n<k>",
         
     # General White.
     

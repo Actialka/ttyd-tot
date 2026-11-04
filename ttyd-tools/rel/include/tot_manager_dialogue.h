@@ -77,6 +77,24 @@ namespace ConversationId {
         NPC_D_OPTIONS_MOVES = 9401,
         NPC_D_OPTIONS_TIMER = 9402,
         NPC_D_OPTIONS_BOSS  = 9403,
+        // Hints the player can pick from a topic menu after the regular hint.
+        NPC_D_BOSS_1        = 9500,     // Gold Fuzzy
+        NPC_D_BOSS_2,                   // Bowser & Kammy
+        NPC_D_BOSS_3,                   // Doopliss
+        NPC_D_SECRET_DAMAGE = 9510,
+        NPC_D_SECRET_BADGE_COMBO,
+        NPC_D_SECRET_COINS,
+        NPC_D_SECRET_ZERO_STATS,
+        // Short replies for topics the player has already completed.
+        NPC_D_BOSS_1_DONE   = 9530,
+        NPC_D_BOSS_2_DONE,
+        NPC_D_BOSS_3_DONE,
+        NPC_D_SECRET_DAMAGE_DONE = 9540,
+        NPC_D_SECRET_BADGE_COMBO_DONE,
+        NPC_D_SECRET_COINS_DONE,
+        NPC_D_SECRET_ZERO_STATS_DONE,
+        // Greeting leading into the topic menu.
+        NPC_D_GREETING      = 9600,
 
         // NPC G (Blue Bub-ulb)
         NPC_G               = 10000,
@@ -264,6 +282,17 @@ EVT_DECLARE_USER_FUNC(evtTot_SetConversation, 1)
 
 // Wrapper to GetNextMessage.
 EVT_DECLARE_USER_FUNC(evtTot_GetNextMessage, 2)
+
+// NPC D hint menu: returns whether to show the topic menu after greeting.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_HasTopicMenu, 1)
+// NPC D hint menu: returns number of achievement hints available, and the
+// conversation to use if there are none.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetNumHints, 2)
+// NPC D hint menu: given a page number, returns a selection string for that
+// page, the number of hints on it, and whether there are further pages.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetHintPage, 4)
+// NPC D hint menu: given a page and option index, returns the conversation.
+EVT_DECLARE_USER_FUNC(evtTot_NpcD_GetHintConversation, 3)
 
 // Returns whether or not there is another conversation queued for afterward.
 EVT_DECLARE_USER_FUNC(evtTot_HasConversationQueued, 1)
