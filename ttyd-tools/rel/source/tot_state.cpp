@@ -37,7 +37,7 @@ using ::ttyd::evtmgr_cmd::evtSetValue;
 namespace ItemType = ::ttyd::item_data::ItemType;
 
 const int32_t kEarliestSupportedVersion = 10;
-const int32_t kCurrentVersion = 13;
+const int32_t kCurrentVersion = 14;
 
 // Holds backup save data (updated on floor 0 and after every boss floor).
 TotSaveSlot g_BackupSave;
@@ -341,6 +341,17 @@ bool StateManager::Load(TotSaveSlot* save) {
 
         // Re-run special file setup to collect new achievements, options, etc.
         DebugManager::SpecialFileSetup();
+    }
+
+    if (previous_version <= 13) {
+        // Countdown timer runs weren't tracked before this version; if the
+        // countdown timer was already unlocked (or the countdown achievement
+        // already earned), have General White acknowledge his records are new
+        // rather than claiming the device is untested.
+        if (GetSWF(GSWF_White_CountdownUnlocked) ||
+            GetOption(FLAGS_ACHIEVEMENT, AchievementId::V2_RUN_COUNTDOWN_50)) {
+            SetSWF(GSWF_White_CountdownPreStatsSave);
+        }
     }
     
     return true;

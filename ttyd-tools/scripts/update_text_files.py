@@ -9577,6 +9577,22 @@ g_PetalburgWestStrings = {
         b"<wait 200>Let me consult my notes...\n"
         b"<k>\n<o>",
 
+    b"tot_di013042_00":
+        b"Hut! <wait 250>Good day to you, Mr.\n"
+        b"Red 'Stache! <wait 200>I have a\n"
+        b"confession to make...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"A good soldier keeps a\n"
+        b"thorough record, <wait 150>but I have\n"
+        b"kept none of yours, BOOM...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I have a fresh logbook ready,\n"
+        b"<wait 150>hut! <wait 200>Your next timed run\n"
+        b"shall be its first entry!\n"
+        b"<k>",
+
     b"tot_white_stats":
         # Should never appear; replaced with dynamic stats breakdown.
         b"<p>\nHut? <wait 200>Where have my notes\ngone... <wait 150>BOOM...\n<k>\n<o>",

@@ -583,9 +583,16 @@ void DialogueManager::SetConversation(int32_t id) {
                     state.GetOption(STAT_PERM_COUNTDOWN_ATTEMPTS);
                 int32_t clears = state.GetOption(STAT_PERM_COUNTDOWN_CLEARS);
 
-                // If no countdown runs attempted yet, use default
-                // conversation (the device is still untested).
-                if (attempts <= 0) break;
+                if (attempts <= 0) {
+                    // If the save predates countdown run tracking, explain
+                    // that records are only starting now; otherwise, use
+                    // default conversation (the device is still untested).
+                    if (GetSWF(GSWF_White_CountdownPreStatsSave)) {
+                        g_ConversationId =
+                            ConversationId::NPC_WHITE_NEW_RECORDS;
+                    }
+                    break;
+                }
 
                 // Otherwise, give an intro, then (in the event script) a
                 // breakdown of countdown run stats, then a queued ending.
