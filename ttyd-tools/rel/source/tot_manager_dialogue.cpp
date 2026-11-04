@@ -279,6 +279,7 @@ void DialogueManager::SetConversation(int32_t id) {
                         case AchievementId::MISC_RUN_COINS_999:
                         case AchievementId::V2_MISC_SP_TURN1:
                         case AchievementId::V3_RUN_DEFEAT_7_TYPES:
+                        case AchievementId::V3_AGG_BOSS_ALL_EX:
                             ids[num_cvs++] =
                                 ConversationId::NPC_D_CVS_BASE + grid[i];
                             break;
