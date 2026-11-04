@@ -9930,6 +9930,75 @@ g_PetalburgWestStrings = {
         b"pick some sturdy ones!\n"
         b"<k>",
 
+    # Short replies for tower rumors / secret goals already completed.
+    b"tot_di009530_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already fought it?\n"
+        b"<wait 250>Wow! <wait 150>Folks are still talking\n"
+        b"about that golden swarm...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick it in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009531_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already faced them?\n"
+        b"<wait 250>Wow! <wait 150>I hear that king's still\n"
+        b"fuming about it...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick them in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009532_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you've already met him?\n"
+        b"<wait 250>Wow! <wait 150>I bet he didn't take\n"
+        b"losing very well...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"Well, <wait 150>if you want a rematch,\n"
+        b"<wait 150>you can pick him in the run\n"
+        b"options, <wait 150>under Final Boss.\n"
+        b"<k>",
+
+    b"tot_di009540_00":
+        b"<p>\n"
+        b"Wait, <wait 150>you already took exactly\n"
+        b"654 damage in one run? <wait 250>That's\n"
+        b"some precise suffering...\n"
+        b"<k>\n"
+        b"<p>\n"
+        b"I'm not sure I'd want to\n"
+        b"try that one myself. <wait 250>Heh...\n"
+        b"<k>",
+
+    b"tot_di009541_00":
+        b"<p>\n"
+        b"Oh, <wait 150>you already pulled that\n"
+        b"one off? <wait 250>I wish I'd seen that\n"
+        b"trickster's face! <wait 250>Heh heh...\n"
+        b"<k>",
+
+    b"tot_di009542_00":
+        b"<p>\n"
+        b"Exactly 417 coins? <wait 250>You must've\n"
+        b"counted every last one!\n"
+        b"<wait 250>That's dedication.\n"
+        b"<k>",
+
+    b"tot_di009543_00":
+        b"<p>\n"
+        b"You already beat a run with\n"
+        b"all your stats at 0? <wait 250>Wow...\n"
+        b"<wait 250>you're tougher than you look!\n"
+        b"<k>",
+
     b"tot_di009600_00":
         # Greeting leading into topic menu.
         b"Oh, it's you again. <wait 250>Welcome!\n"

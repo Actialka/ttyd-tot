@@ -350,6 +350,39 @@ void DialogueManager::SetConversation(int32_t id) {
             g_NpcDAllDone = num_achievements == num_total_achievements;
             break;
         }
+        // For tower rumors / secret goals the player has already completed,
+        // swap to a short reply instead of the full hint.
+        case ConversationId::NPC_D_BOSS_1:
+        case ConversationId::NPC_D_BOSS_2:
+        case ConversationId::NPC_D_BOSS_3: {
+            constexpr const int32_t kBeatenFlags[] = {
+                GSWF_SecretBoss1_Beaten,
+                GSWF_SecretBoss2_Beaten,
+                GSWF_SecretBoss3_Beaten,
+            };
+            int32_t index = id - ConversationId::NPC_D_BOSS_1;
+            if (GetSWF(kBeatenFlags[index])) {
+                g_ConversationId = ConversationId::NPC_D_BOSS_1_DONE + index;
+            }
+            break;
+        }
+        case ConversationId::NPC_D_SECRET_DAMAGE:
+        case ConversationId::NPC_D_SECRET_BADGE_COMBO:
+        case ConversationId::NPC_D_SECRET_COINS:
+        case ConversationId::NPC_D_SECRET_ZERO_STATS: {
+            constexpr const int32_t kAchievements[] = {
+                AchievementId::SECRET_DAMAGE,
+                AchievementId::SECRET_BADGE_COMBO,
+                AchievementId::SECRET_COINS,
+                AchievementId::SECRET_ZERO_STATS_3,
+            };
+            int32_t index = id - ConversationId::NPC_D_SECRET_DAMAGE;
+            if (state.GetOption(FLAGS_ACHIEVEMENT, kAchievements[index])) {
+                g_ConversationId =
+                    ConversationId::NPC_D_SECRET_DAMAGE_DONE + index;
+            }
+            break;
+        }
         case ConversationId::NPC_F: {
             int32_t num_cvs =
                 ConversationId::NPC_F_CVS_END -

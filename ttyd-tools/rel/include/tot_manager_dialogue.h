@@ -85,6 +85,14 @@ namespace ConversationId {
         NPC_D_SECRET_BADGE_COMBO,
         NPC_D_SECRET_COINS,
         NPC_D_SECRET_ZERO_STATS,
+        // Short replies for topics the player has already completed.
+        NPC_D_BOSS_1_DONE   = 9530,
+        NPC_D_BOSS_2_DONE,
+        NPC_D_BOSS_3_DONE,
+        NPC_D_SECRET_DAMAGE_DONE = 9540,
+        NPC_D_SECRET_BADGE_COMBO_DONE,
+        NPC_D_SECRET_COINS_DONE,
+        NPC_D_SECRET_ZERO_STATS_DONE,
         // Greeting leading into the topic menu.
         NPC_D_GREETING      = 9600,
 
