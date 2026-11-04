@@ -16,9 +16,36 @@
 #include <cstdio>
 #include <cstring>
 
+extern "C" {
+    // file_rename_patches.s
+    void windowDispGX_Message_hook();
+    void windowDispGX_System_hook();
+    void windowDispGX_Kanban_hook();
+    void msgWindow_Disp_hook();
+
+    // Set by the hooks above whenever a dialog / message window is drawn.
+    int32_t g_FileRenameDialogDrawn = 0;
+    // Trampolines to the original functions, used by the hooks above.
+    void* windowDispGX_Message_hook_trampoline = nullptr;
+    void* windowDispGX_System_hook_trampoline = nullptr;
+    void* windowDispGX_Kanban_hook_trampoline = nullptr;
+    void* msgWindow_Disp_hook_trampoline = nullptr;
+}
+
 namespace mod::tot {
 
 namespace {
+
+// Addresses of the game's dialog / message window drawing functions.
+constexpr uintptr_t kWindowDispGX_Message = 0x8007bad8;
+constexpr uintptr_t kWindowDispGX_System  = 0x8007d994;
+constexpr uintptr_t kWindowDispGX_Kanban  = 0x8007e9f0;
+constexpr uintptr_t kMsgWindow_Disp       = 0x80080260;
+
+void* HookDialogDrawFunction(uintptr_t address, void (*hook)()) {
+    return reinterpret_cast<void*>(mod::hookFunction(
+        reinterpret_cast<void (*)()>(address), hook));
+}
 
 using ::ttyd::seqdrv::SeqIndex;
 
@@ -87,11 +114,11 @@ int32_t g_HoveredFile = -1;
 // last update, and during the previous frame.
 uint32_t g_FilesDrawn = 0;
 uint32_t g_FilesDrawnLastFrame = 0;
-// Frames left to keep the hint hidden after any file's info stopped being
-// drawn. The vanilla copy / delete prompts make the selected file blink, so
-// this hides the hint while those are up (renaming isn't possible then).
-constexpr int32_t kFileBlinkHideFrames = 60;
-int32_t g_FileBlinkHideTimer = 0;
+// Frames left to keep the hint hidden after a dialog box (e.g. the copy /
+// delete prompts, or "reading save file") was last drawn, since renaming
+// isn't possible while one is up.
+constexpr int32_t kDialogHideFrames = 10;
+int32_t g_DialogHideTimer = 0;
 // After pressing A / B on the file select screen, the hint is hidden for a
 // few frames to see if the screen starts transitioning away (e.g. the curtain
 // closing when returning to the title screen, or loading a file). If it does,
@@ -397,16 +424,26 @@ void FileRenameManager::Init() {
         keyGetStickY, [](uint32_t pad) -> uint32_t {
             return IsInputBlocked() ? 0 : g_keyGetStickY_trampoline(pad);
         });
+
+    // Detect dialog boxes being drawn (see file_rename_patches.s).
+    windowDispGX_Message_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_Message, windowDispGX_Message_hook);
+    windowDispGX_System_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_System, windowDispGX_System_hook);
+    windowDispGX_Kanban_hook_trampoline = HookDialogDrawFunction(
+        kWindowDispGX_Kanban, windowDispGX_Kanban_hook);
+    msgWindow_Disp_hook_trampoline = HookDialogDrawFunction(
+        kMsgWindow_Disp, msgWindow_Disp_hook);
 }
 
 void FileRenameManager::Update() {
-    // A file whose info was drawn before but not last frame is blinking (or
-    // otherwise went away); hold off on showing the hint for a while.
-    if (g_FilesDrawnLastFrame & ~g_FilesDrawn) {
-        g_FileBlinkHideTimer = kFileBlinkHideFrames;
-    } else if (g_FileBlinkHideTimer > 0) {
-        --g_FileBlinkHideTimer;
+    // Hide the hint while (and shortly after) any dialog box is drawn.
+    if (g_FileRenameDialogDrawn) {
+        g_DialogHideTimer = kDialogHideFrames;
+    } else if (g_DialogHideTimer > 0) {
+        --g_DialogHideTimer;
     }
+    g_FileRenameDialogDrawn = 0;
     g_FilesDrawnLastFrame = g_FilesDrawn;
     g_FilesDrawn = 0;
 
@@ -426,7 +463,7 @@ void FileRenameManager::Update() {
         g_HoveredFile = -1;
         g_LeaveCheckTimer = 0;
         g_Leaving = false;
-        g_FileBlinkHideTimer = 0;
+        g_DialogHideTimer = 0;
         return;
     }
 
@@ -454,7 +491,7 @@ void FileRenameManager::Update() {
 
     g_HoveredFile =
         (g_WaitForRelease || g_Leaving || g_LeaveCheckTimer > 0 ||
-         g_FileBlinkHideTimer > 0)
+         g_DialogHideTimer > 0)
             ? -1 : GetHoveredFile();
     if (g_HoveredFile >= 0 && !ttyd::cardmgr::cardIsExec() &&
         (g_keyGetButtonTrg_trampoline(0) & ButtonId::Y)) {
