@@ -77,6 +77,15 @@ namespace ConversationId {
         NPC_D_OPTIONS_MOVES = 9401,
         NPC_D_OPTIONS_TIMER = 9402,
         NPC_D_OPTIONS_BOSS  = 9403,
+        // Non-random hints for unlocking each unique final boss.
+        NPC_D_BOSS_1        = 9500,     // Gold Fuzzy
+        NPC_D_BOSS_2,                   // Bowser & Kammy
+        NPC_D_BOSS_3,                   // Doopliss
+        // Non-random hints for secret achievements.
+        NPC_D_SECRET_DAMAGE = 9510,
+        NPC_D_SECRET_BADGE_COMBO,
+        NPC_D_SECRET_COINS,
+        NPC_D_SECRET_ZERO_STATS,
 
         // NPC G (Blue Bub-ulb)
         NPC_G               = 10000,
