@@ -121,8 +121,8 @@ void (*g_fadeEntry_trampoline)(
 
 // --- Temporary diagnostics for title screen timing. -------------------------
 // Shows a timeline of screen / title state changes and fades (with frame
-// numbers and real time) on the logo and title screens, plus the live frame
-// rate. Set to false to hide.
+// numbers and real time) from boot onward, plus the live frame rate, on the
+// title screen. Set to false to hide.
 constexpr const bool kShowTitleDiagnostics = true;
 
 struct FadeCall {
@@ -242,29 +242,29 @@ void UpdateDiagnostics() {
         ++g_NumFadeCallsLogged;
     }
 
-    if (title) {
+    // Formatted as integers (fps in tenths, alpha in hundredths), to avoid
+    // float formatting this early in boot.
+    const int32_t fps_tenths = static_cast<int32_t>(g_DiagFps * 10.0f);
+    if (title && title_state >= 0) {
         snprintf(g_DiagStatus, sizeof(g_DiagStatus),
-            "fps %.1f  seq %" PRId32 "/%" PRId32 "\n"
+            "fps %" PRId32 ".%" PRId32 "  seq %" PRId32 "/%" PRId32 "\n"
             "title st %" PRId32 " cnt %" PRId32 " tmr %" PRId32
-            " a %.2f",
-            g_DiagFps, seq, next_seq, title_state,
-            title_state >= 0 ? title->counter : -1,
-            title_state >= 0 ? title->timer : -1,
-            title_state >= 0 ? title->fade_alpha : -1.0f);
+            " a %" PRId32,
+            fps_tenths / 10, fps_tenths % 10, seq, next_seq, title_state,
+            title->counter, title->timer,
+            static_cast<int32_t>(title->fade_alpha * 100.0f));
     } else {
         snprintf(g_DiagStatus, sizeof(g_DiagStatus),
-            "fps %.1f  seq %" PRId32 "/%" PRId32,
-            g_DiagFps, seq, next_seq);
+            "fps %" PRId32 ".%" PRId32 "  seq %" PRId32 "/%" PRId32,
+            fps_tenths / 10, fps_tenths % 10, seq, next_seq);
     }
 }
 
+// Only called on the title screen once it's safe to draw there (the same
+// point the version info is drawn); events from earlier, including the logo
+// screen, are still logged by UpdateDiagnostics.
 void DrawDiagnostics() {
     if (!kShowTitleDiagnostics) return;
-    const auto seq = ttyd::seqdrv::seqGetSeq();
-    if (seq != ttyd::seqdrv::SeqIndex::kLogo &&
-        seq != ttyd::seqdrv::SeqIndex::kTitle) {
-        return;
-    }
     const float scale = 0.42f;
     const float left = -296.0f;
     float y = 220.0f;
@@ -419,14 +419,14 @@ void TitleScreenManager::Update() {
 }
 
 void TitleScreenManager::Draw() {
-    DrawDiagnostics();
-
     // If on the title screen and the curtain is not fully down.
     if (CheckSeq(ttyd::seqdrv::SeqIndex::kTitle)) {
         const uint32_t curtain_state = *reinterpret_cast<uint32_t*>(
             reinterpret_cast<uintptr_t>(ttyd::seq_title::seqTitleWorkPointer2)
             + 0x8);
         if (curtain_state >= 2 && curtain_state < 12) {
+            DrawDiagnostics();
+
             // Draw title screen information.
             DrawCenteredTextWindow(
                 kTitleInfo, 230, -180, 0xFFu, true, 0xFFFFFFFFu, 0.52f, 
