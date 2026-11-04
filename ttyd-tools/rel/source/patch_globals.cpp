@@ -565,6 +565,7 @@ extern const int32_t g_subsetevt_shot_damage_Patch_SuperInvolvedWeapon = 0x80351
 extern const int32_t g_subsetevt_shot_damage_Patch_UltraInvolvedWeapon = 0x80351f58;
 extern const int32_t g_subsetevt_swallow_shot_damage_Patch_InvolvedWeapon = 0x80352c78;
 extern const int32_t g_ItemEvent_Support_NoEffect_TradeOffJumpPoint = 0x803652b8;
+extern const int32_t g_ItemEvent_Nemure_Yoikoyo_SleepWait = 0x80368a68;
 extern const int32_t g_ItemEvent_Teki_Kyouka_ApplyStatusHook = 0x80369b34;
 extern const int32_t g_ItemEvent_Poison_Kinoko_PoisonChance = 0x8036c914;
 extern const int32_t g_ItemEvent_LastDinner_Weapon = 0x8036caf4;
