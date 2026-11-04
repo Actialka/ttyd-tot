@@ -280,8 +280,21 @@ void DialogueManager::SetConversation(int32_t id) {
                         case AchievementId::V2_MISC_SP_TURN1:
                         case AchievementId::V3_RUN_DEFEAT_7_TYPES:
                         case AchievementId::V3_AGG_BOSS_ALL_EX:
+                        case AchievementId::MISC_ZESS_SIGNATURE:
+                        case AchievementId::MISC_KEY_SKIP_CHEST:
+                        case AchievementId::V3_RUN_ITEMS_FULL:
+                        case AchievementId::V2_MISC_STATUS_5:
+                        case AchievementId::V3_MISC_INFATUATE_DAMAGE:
+                        case AchievementId::MISC_SHRUNK_OHKO:
+                        case AchievementId::MISC_MEGATON_BOMB:
                             ids[num_cvs++] =
                                 ConversationId::NPC_D_CVS_BASE + grid[i];
+                            break;
+                        case AchievementId::V3_RUN_BOSS_SIMULTANEOUS:
+                            // Only hint once Bowser & Kammy aren't a spoiler.
+                            if (GetSWF(GSWF_SecretBoss2_Beaten))
+                                ids[num_cvs++] =
+                                    ConversationId::NPC_D_CVS_BASE + grid[i];
                             break;
                         case AchievementId::META_ITEM_LOG_BASIC:
                             // Only hint after Zess T. isn't a spoiler.
