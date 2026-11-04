@@ -23,6 +23,7 @@
 #include <ttyd/battle_unit.h>
 #include <ttyd/battle_weapon_power.h>
 #include <ttyd/eff_nice.h>
+#include <ttyd/eff_sheep.h>
 #include <ttyd/effdrv.h>
 #include <ttyd/evt_eff.h>
 #include <ttyd/evt_snd.h>
@@ -76,6 +77,8 @@ extern int32_t (*g__get_flower_suitoru_point_trampoline)(EvtEntry*, bool);
 extern int32_t (*g__get_heart_suitoru_point_trampoline)(EvtEntry*, bool);
 extern int32_t (*g_BattleItemData_hpfp_change_declare_1_trampoline)(EvtEntry*, bool);
 extern int32_t (*g_BattleItemData_rank_up_trampoline)(EvtEntry*, bool);
+extern ::ttyd::effdrv::EffEntry* (*g_effSheepEntry_trampoline)(
+    int32_t, float, float, float);
 // Patch addresses.
 extern const int32_t g_itemMain_CheckItemFreeze_BH;
 extern const int32_t g_pouchRemoveItemIndex_CheckMaxInv_BH;
@@ -932,6 +935,28 @@ void ApplyFixedPatches() {
 
     // Reduce Sleepy Sheep turn count to 3, to reduce frustration AND cheese.
     ttyd::battle_item_data::ItemWeaponData_Nemure_Yoikoyo.sleep_time = 3;
+    // Speed up the Sleepy Sheep herd animation. Originally each sheep runs at
+    // a random 2.0 - 3.9 units/frame across a 1000-unit stage, and the final
+    // straggler sheep waits 200 frames past the rest of the herd, so the
+    // effect could take ~750 frames (well past the item's 450-frame event).
+    // Now the herd runs twice as fast (done by ~330 frames at worst), and the
+    // straggler starts 40 frames after the herd at a fixed 5.0 units/frame
+    // (done by ~290 frames).
+    g_effSheepEntry_trampoline = mod::hookFunction(
+        ttyd::eff_sheep::effSheepEntry,
+        [](int32_t type, float x, float y, float z) {
+            auto* eff = g_effSheepEntry_trampoline(type, x, y, z);
+            auto* sheep = reinterpret_cast<ttyd::eff_sheep::EffSheepWork*>(
+                eff->eff_work);
+            // Entry 0 is the spawn position, not a sheep.
+            for (int32_t i = 1; i < eff->eff_count - 1; ++i) {
+                sheep[i].x_speed *= 2.0f;
+            }
+            auto& last = sheep[eff->eff_count - 1];
+            last.delay = eff->eff_count + 40;
+            last.x_speed = 5.0f;
+            return eff;
+        });
 
     // Hot Sauce charges by +3.
     ttyd::battle_item_data::ItemWeaponData_RedKararing.charge_strength = 3;

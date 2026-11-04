@@ -6,6 +6,7 @@
 #include <ttyd/battle_unit.h>
 #include <ttyd/dispdrv.h>
 #include <ttyd/eff_gonbaba_breath.h>
+#include <ttyd/effdrv.h>
 #include <ttyd/evtmgr.h>
 #include <ttyd/filemgr.h>
 #include <ttyd/npcdrv.h>
@@ -263,6 +264,9 @@ int32_t (*g_bakuGameDecideWeapon_trampoline)(EvtEntry*, bool) = nullptr;
 // sac_zubastar.o  80235c7c
 uint32_t (*g_weaponGetPower_ZubaStar_trampoline)(
     BattleWorkUnit*, BattleWeapon*, BattleWorkUnit*, BattleWorkUnitPart*) = nullptr;
+// eff_sheep.o  80238a90
+::ttyd::effdrv::EffEntry* (*g_effSheepEntry_trampoline)(
+    int32_t, float, float, float) = nullptr;
 // winmgr.o  8023cf50
 int32_t (*g_winMgrSelectOther_trampoline)(WinMgrSelectEntry*, EvtEntry*) = nullptr;
 // winmgr.o  8023d624

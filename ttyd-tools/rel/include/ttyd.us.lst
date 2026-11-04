@@ -3837,6 +3837,10 @@
 802372a8:urouro_main_func
 80237878:urouro_init_func
 
+// eff_sheep.o
+802385dc:effSheepMain
+80238a90:effSheepEntry
+
 // winmgr.o
 // .text
 8023976c:select_disp3_mario
