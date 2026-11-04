@@ -7,7 +7,7 @@ namespace mod::tot {
 // Handles renaming existing save files from the file select screen.
 //
 // While hovering an existing file on the file select screen, pressing Y opens
-// an on-screen keyboard to choose a new name for that file. The new name is
+// the game's name entry window to choose a new name for that file. The new name is
 // written to that file's slot in the memory card buffer, so it's displayed on
 // the file select screen right away and used when the file is loaded.
 //
