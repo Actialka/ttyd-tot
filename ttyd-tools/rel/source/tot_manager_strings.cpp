@@ -6,6 +6,7 @@
 #include "tot_gsw.h"
 #include "tot_manager_achievements.h"
 #include "tot_manager_move.h"
+#include "tot_manager_music.h"
 #include "tot_manager_options.h"
 #include "tot_state.h"
 
@@ -30,6 +31,7 @@ namespace MsgKey {
         CUSTOM_TATTLE_KILLCOUNT,
         CUSTOM_TATTLE_MENU,
         MENU_MONOSIRI_DERUTOKORO,
+        MSG_BGM,
         MSG_STAR_PIECE,
         SYS_NO_KEY,
         TOT_ACHD_89,
@@ -51,6 +53,7 @@ constexpr const char* kKeyLookups[] = {
     "custom_tattle_killcount",
     "custom_tattle_menu",
     "menu_monosiri_derutokoro",
+    "msg_bgm",
     "msg_star_piece",
     "sys_no_key",
     "tot_achd_89",
@@ -292,6 +295,8 @@ const char* StringsManager::LookupReplacement(const char* msg_key) {
         case MsgKey::MENU_MONOSIRI_DERUTOKORO:
             // Get rid of extra spacing before location in Tattle log.
             return "";
+        case MsgKey::MSG_BGM:
+            return MusicManager::GetToggleDescription();
         case MsgKey::MSG_STAR_PIECE:
             // Different descriptions in hub and during a run.
             if (!g_Mod->state_.GetOption(OPT_RUN_STARTED)) {

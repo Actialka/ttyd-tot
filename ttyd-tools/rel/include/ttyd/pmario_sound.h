@@ -17,6 +17,16 @@ struct PSndSfxListEntry {
 };
 static_assert(sizeof(PSndSfxListEntry) == 0x14);
 
+struct PSndBgmListEntry {
+    const char* name;
+    uint32_t flags;         // 0x8000'0000 = streamed from sound/stream.
+    const char* path;       // Without the ".stm" extension.
+    uint8_t vol;
+    uint8_t pan;
+    uint16_t unk_0x0e;
+};
+static_assert(sizeof(PSndBgmListEntry) == 0x10);
+
 extern "C" {
 
 // .text
@@ -73,6 +83,7 @@ void psndStopAllFadeOut();
 // angleABf
 
 // .data
+extern PSndBgmListEntry psbgmlist[262];
 extern PSndSfxListEntry pssfxlist[4242];
     
 }

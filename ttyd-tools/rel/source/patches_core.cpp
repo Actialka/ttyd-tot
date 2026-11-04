@@ -7,6 +7,7 @@
 #include "patches_apply.h"
 #include "patches_mario_move.h"
 #include "patches_options.h"
+#include "tot_manager_music.h"
 #include "tot_manager_options.h"
 #include "tot_manager_progress.h"
 #include "tot_manager_strings.h"
@@ -299,6 +300,8 @@ void ApplyFixedPatches() {
                 !GetSWF(GSWF_BgmEnabled)) {
                 return 0U;
             }
+            // Point battle / victory tracks at remake streams, if enabled.
+            tot::MusicManager::OnBgmStart(name);
             return g_psndBGMOn_f_d_trampoline(unk0, name, fadein_time, unk1);
         });
     

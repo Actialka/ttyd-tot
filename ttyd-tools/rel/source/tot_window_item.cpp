@@ -8,6 +8,7 @@
 #include "tot_gsw.h"
 #include "tot_manager_cosmetics.h"
 #include "tot_manager_move.h"
+#include "tot_manager_music.h"
 #include "tot_manager_reward.h"
 #include "tot_state.h"
 
@@ -1327,7 +1328,11 @@ int32_t ItemMenuMain(WinPauseMenu* menu) {
                             effect_flag = GSWF_BgmEnabled;
                     }
                     if (effect_flag) {
-                        if (ToggleSWF(effect_flag)) {
+                        // The music toggle cycles Off / Original / Remake.
+                        bool now_on = effect_flag == GSWF_BgmEnabled
+                            ? MusicManager::CycleMusicOption()
+                            : ToggleSWF(effect_flag);
+                        if (now_on) {
                             ttyd::pmario_sound::psndSFXOn((char *)0x20038);
                         } else {
                             // Also disable Stat Master if Peekaboo disabled. 

@@ -1,0 +1,7 @@
+# Never commit soundtrack audio or converted streams.
+*.flac
+*.mp3
+*.wav
+*.stm
+*.raw
+*.bin

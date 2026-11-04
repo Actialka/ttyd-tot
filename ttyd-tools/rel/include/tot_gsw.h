@@ -99,6 +99,8 @@ enum GlobalWorkVars {
     GSWF_SuperPeekabooEnabled,
     GSWF_TimingTutorEnabled,
     GSWF_BgmEnabled, 
+    // Plays remake battle themes (if on the disc) while music is enabled.
+    GSWF_RemakeBgmEnabled,
     
     // Used for enabling cosmetic choices that persist across runs.
     GSWF_AttackFxFlags                      = GSWF(7500),
