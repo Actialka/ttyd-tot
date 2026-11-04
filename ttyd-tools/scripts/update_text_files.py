@@ -9538,9 +9538,9 @@ g_PetalburgWestStrings = {
         b"a Tattle or two could help.\n"
         b"<k>\n"
         b"<p>\n"
-        b"That'd be quite a sight, <wait 150>both\n"
-        b"of them going down together!\n"
-        b"<wait 250>Good luck with it!\n"
+        b"Just be careful not to let\n"
+        b"Kammy heal them both up,\n"
+        b"<wait 150>or you'll be back to square one!\n"
         b"<k>\n<o>",
 
     b"tot_di009300_00":
